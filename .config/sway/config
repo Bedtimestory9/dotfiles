@@ -257,8 +257,8 @@ bar {
 }
 
 
-# Property Name             Border  BG      Text    Indicator Child-border
-# client.focused              
+# Property Name               Border  BG      Text    Indicator Child-border
+# client.focused              #D8BFD8 #BDB5D5
 # client.focused_inactive     
 # client.unfocused            
 # client.urgent               
