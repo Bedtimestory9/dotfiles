@@ -4,7 +4,7 @@ end
 
 ## Alias
 alias pn=pnpm
-alias sd "cd ~ && cd (find * -type d | fzf)"
+alias sd "wl-copy (find . -type f | fzf)"
 alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
 # alias tmux='tmux -2'
 
