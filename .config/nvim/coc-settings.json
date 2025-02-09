@@ -2,4 +2,6 @@
     "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
     "sumneko-lua.enableNvimLuaDev": true,
     "snippets.ultisnips.pythonPrompt": false,
+    "diagnostic.virtualText": true,
+    "diagnostic.enableMessage": "jump"
 }

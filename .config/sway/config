@@ -17,17 +17,17 @@ set $mouse "5426:110:Razer_Razer_DeathAdder_Essential"
 exec wl-paste -t text --watch clipman store --no-persist
 
 exec swaymsg "workspace 2; exec firefox"
-exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"
+# exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu dmenu_path | fuzzel | xargs swaymsg exec --
 
 ### Appearance
 # window corner radius in px
-corner_radius 10
+corner_radius 7
 
 # Window background blur
-blur off
+blur on
 blur_xray off
 blur_passes 2
 blur_radius 5
@@ -45,10 +45,11 @@ dim_inactive_colors.urgent #900000FF
 # Move minimized windows into Scratchpad (enable|disable)
 scratchpad_minimize disable
 
+gaps inner 2px
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ../../Media/Wallpapers/silas-baisch-OCzvgBqCJKY-unsplash.jpg fill
 #
 # Example configuration:
 #
@@ -249,7 +250,7 @@ bar {
     colors {
         statusline #F4F4F4
         background #32323240
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        inactive_workspace #32323200 #32323200 #4C4C4C
     }
 }
 

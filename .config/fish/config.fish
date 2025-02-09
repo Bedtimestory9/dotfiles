@@ -8,7 +8,7 @@ alias sd "cd (find . -type d | fzf)"
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
 
-fish_config theme choose Tomorrow\ Night
+fish_config theme choose Fairground
 # >>> Keybinds >>>
 function fish_user_key_bindings
     bind \ck 'up-or-search'

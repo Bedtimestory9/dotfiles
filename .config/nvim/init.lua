@@ -15,6 +15,9 @@ vim.opt.signcolumn = "yes"
 vim.cmd("set clipboard=unnamedplus")
 vim.cmd("set nohlsearch")
 vim.cmd("set ignorecase")
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 local opts = { silent = true }
 vim.keymap.set("n", "<Tab>",   ">>",  opts)
@@ -119,7 +122,8 @@ require('pckr').add{
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
         requres = { {"nvim-lua/plenary.nvim"} }
-    }
+    },
+    {   "nvim-tree/nvim-tree.lua"  }
 }
 
 ------------------------------------------------------------------------
@@ -155,13 +159,24 @@ local opts = {silent = true, noremap = true, expr = true, replace_keycodes = fal
 -- <C-g>u breaks current undo, please make your own choice
     keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
+-- Use `[g` and `]g` to navigate diagnostics
+-- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
+    keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
+    keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
+
+-- GoTo code navigation
+    keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
+    keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
+    keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
+    keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+
 -- Use K to show documentation in preview window
 function _G.show_docs()
     local cw = vim.fn.expand('<cword>')
     if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
         vim.api.nvim_command('h ' .. cw)
-    elseif vim.api.nvim_eval('coc#rpc#ready()') then
-        vim.fn.CocActionAsync('doHover')
+    -- elseif vim.api.nvim_eval('coc#rpc#ready()') then
+    --     vim.fn.CocActionAsync('doHover')
     else
         vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
     end
@@ -214,4 +229,14 @@ vim.keymap.set("n", "<C-4>", function() harpoon:list():select(4) end)
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<C-S-h>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-S-l>", function() harpoon:list():next() end)
+
+-- nvim-tree
+vim.keymap.set("n", "<C-s>", "<cmd>NvimTreeToggle<CR>")
+
+-- pass to setup along with your other options
+require("nvim-tree").setup {
+  ---
+  on_attach = my_on_attach,
+  ---
+}
 
