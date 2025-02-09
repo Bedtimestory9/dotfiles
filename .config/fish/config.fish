@@ -4,16 +4,20 @@ end
 
 ## Alias
 alias pn=pnpm
-alias sd "wl-copy (find . -type f | fzf)"
+alias sd "cd (find . -type d | fzf)"
+# Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
-# alias tmux='tmux -2'
 
+fish_config theme choose Tomorrow\ Night
 # >>> Keybinds >>>
 function fish_user_key_bindings
-  bind \ck 'up-or-search'
-  bind \cj 'down-or-search'
-  bind \ch 'backward-word'
-  bind \cl 'forward-word'
+    bind \ck 'up-or-search'
+    bind \cj 'down-or-search'
+    bind \ch 'backward-word'
+    bind \cl 'forward-word'
+    ### Auto-suggestion
+    bind \cs accept-autosuggestion
+    bind \cw backward-kill-bigword
 end
 
 ### pnpm
@@ -22,17 +26,16 @@ if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
 
-### PATH
-if status --is-login
-    ### laravel
-    set -gx path ~/.config/composer/vendor/bin:$path
-    ### treesitter
-    set -gx path $home/.local/bin:$path
-    ### npm
-    set -gx npm_config_prefix $home/.local
-    ### wine prefix
-    set -gx WINEPREFIX $home/.wine
-end
+### laravel
+fish_add_path ~/.config/composer/vendor/bin:$path
+### treesitter
+fish_add_path $home/.local/bin:$path
+### GO
+set -gx GOPATH ""
+### npm
+set -gx npm_config_prefix "$home/.local"
+### wine prefix
+set -gx WINEPREFIX "$home/.wine"
 
 # For fcitx5
 set -gx GTK_IM_MODULE fcitx

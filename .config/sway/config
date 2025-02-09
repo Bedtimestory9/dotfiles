@@ -10,8 +10,12 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term foot
+set $mouse "5426:110:Razer_Razer_DeathAdder_Essential"
 # Your preferred application launcher
-# exec swaymsg "exec ags run"
+
+# Persist after closing window
+exec wl-paste -t text --watch clipman store --no-persist
+
 exec swaymsg "workspace 2; exec firefox"
 exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -78,6 +82,13 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     # Make mouse follow focus
     mouse_warping container
 #
+### Mouse
+#
+    input $mouse {
+       pointer_accel -0.7
+   }
+
+#
 # Keyboard
 #
 # 
@@ -94,11 +105,6 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
     bindsym $mod+Return exec $term
     bindsym $mod+Shift+q kill
     bindsym $mod+d exec $menu
-
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
-    # Despite the name, also works for non-floating windows.
-    # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
     floating_modifier $mod normal
 
@@ -107,6 +113,12 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+#
+# Custom Keybinds
+#
+    bindsym $mod+p exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - Media/Screenshots/$(date +'%s_grim.png')
+
+
 #
 # Moving around:
 #
@@ -216,8 +228,8 @@ bindsym $mod+r mode "resize"
     bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
     bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDO_SINK@ toggle
     bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-    bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-    bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+    bindsym XF86MonBrightnessDown exec brightnessctl set 2%-
+    bindsym XF86MonBrightnessUp exec brightnessctl set 2%+
     bindsym XF86AudioPlay exec playerctl play-pause
     bindsym XF86AudioNext exec playerctl next
     bindsym XF86AudioPrev exec playerctl previous
@@ -232,7 +244,7 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+    status_command i3status
 
     colors {
         statusline #ffffff
@@ -241,4 +253,10 @@ bar {
     }
 }
 
+# Property Name             Border  BG      Text    Indicator Child-border
+# client.focused              
+# client.focused_inactive     
+# client.unfocused            
+# client.urgent               
+# client.placeholder          
 include /etc/sway/config.d/*

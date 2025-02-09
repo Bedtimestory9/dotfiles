@@ -150,7 +150,10 @@ end
 local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
     keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
     keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+
 -- Make <CR> to accept selected completion item or notify coc.nvim to format
+-- <C-g>u breaks current undo, please make your own choice
+    keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 -- Use K to show documentation in preview window
 function _G.show_docs()
@@ -209,6 +212,6 @@ vim.keymap.set("n", "<C-3>", function() harpoon:list():select(3) end)
 vim.keymap.set("n", "<C-4>", function() harpoon:list():select(4) end)
 
 -- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<C-p>", function() harpoon:list():prev() end)
-vim.keymap.set("n", "<C-n>", function() harpoon:list():next() end)
+vim.keymap.set("n", "<C-S-h>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-S-l>", function() harpoon:list():next() end)
 

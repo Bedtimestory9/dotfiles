@@ -1,5 +1,5 @@
 {
     "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
     "sumneko-lua.enableNvimLuaDev": true,
-    "snippets.ultisnips.pythonPrompt": false
+    "snippets.ultisnips.pythonPrompt": false,
 }
