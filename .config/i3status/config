@@ -30,7 +30,11 @@ wireless _first_ {
 # }
 
 battery all {
+        last_full_capacity = true
         format = "%status %percentage" #%remaining
+        status_bat = "🔌"
+        separator = false
+        separator_block_width = 20
 }
 
 disk "/" {
@@ -48,5 +52,5 @@ memory {
 }
 
 tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+        format = "%m-%d %H:%M:%S"
 }

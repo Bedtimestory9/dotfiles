@@ -16,7 +16,8 @@ set $mouse "5426:110:Razer_Razer_DeathAdder_Essential"
 # Persist after closing window
 exec wl-paste -t text --watch clipman store --no-persist
 
-exec swaymsg "workspace 2; exec firefox"
+exec swaymsg "workspace 3; exec firefox"
+exec swaymsg "workspace 1; exec mullvad-vpn"
 # exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -239,6 +240,7 @@ bindsym $mod+r mode "resize"
 #
 # Status Bar:
 #
+set $sway-default #285577FF
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
@@ -248,11 +250,12 @@ bar {
     status_command i3status
 
     colors {
-        statusline #F4F4F4
-        background #32323240
-        inactive_workspace #32323200 #32323200 #4C4C4C
+        statusline $sway-default
+        background #32323215
+        inactive_workspace #32323200 #32323200 #F4F4F4
     }
 }
+
 
 # Property Name             Border  BG      Text    Indicator Child-border
 # client.focused              

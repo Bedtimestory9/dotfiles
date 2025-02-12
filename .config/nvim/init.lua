@@ -27,15 +27,15 @@ vim.keymap.set("v", "<S-Tab>", "<<", opts)
 vim.keymap.set('n', '<C-i>', '<C-i>') -- Distinguish <Tab> from <C-i> in normal mode
 
 -- Fix heex/eex format
-vim.filetype.add({
-    extension = {
-        heex = "eelixir",
-        eex = "eelixir",
-        leex = "eelixir",
-        sface = "eelixir",
-        lexs = "eelixir",
-    }
-})
+-- vim.filetype.add({
+--     extension = {
+--         heex = "elixir",
+--         eex = "elixir",
+--         leex = "elixir",
+--         sface = "elixir",
+--         lexs = "elixir",
+--     }
+-- })
 
 -- Fix SASS/SCSS
 vim.cmd("autocmd FileType scss setl iskeyword+=@")
@@ -85,13 +85,12 @@ require('pckr').add{
         name = 'flexoki',
         priority = 1000,
         config = function()
-            vim.cmd.colorscheme "flexoki-dark"
+            vim.cmd.colorscheme "flexoki-light"
         end
     },
     { 'nvim-tree/nvim-web-devicons' },
     { "ibhagwan/fzf-lua" },
     { 'nvim-lua/plenary.nvim' },
-    { 'elixir-editors/vim-elixir' },
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.8',
@@ -123,7 +122,7 @@ require('pckr').add{
         branch = "harpoon2",
         requres = { {"nvim-lua/plenary.nvim"} }
     },
-    {   "nvim-tree/nvim-tree.lua"  }
+    {   "nvim-tree/nvim-tree.lua"  },
 }
 
 ------------------------------------------------------------------------
@@ -135,7 +134,7 @@ vim.keymap.set("n", "<c-z>", "<cmd>lua require('fzf-lua').files()<CR>", { silent
 
 -- Telescope
 local builtin = require("telescope.builtin")
-    vim.keymap.set("n", "<c-f>", builtin.live_grep, {})
+    vim.keymap.set("n", "<C-S-f>", builtin.live_grep, {})
 
 ------------------------------------------------------------------------
 -- CocNvim
@@ -175,8 +174,8 @@ function _G.show_docs()
     local cw = vim.fn.expand('<cword>')
     if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
         vim.api.nvim_command('h ' .. cw)
-    -- elseif vim.api.nvim_eval('coc#rpc#ready()') then
-    --     vim.fn.CocActionAsync('doHover')
+    elseif vim.api.nvim_eval('coc#rpc#ready()') then
+        vim.fn.CocActionAsync('doHover')
     else
         vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
     end
@@ -231,12 +230,6 @@ vim.keymap.set("n", "<C-S-h>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-S-l>", function() harpoon:list():next() end)
 
 -- nvim-tree
+require'nvim-tree'.setup {}
 vim.keymap.set("n", "<C-s>", "<cmd>NvimTreeToggle<CR>")
-
--- pass to setup along with your other options
-require("nvim-tree").setup {
-  ---
-  on_attach = my_on_attach,
-  ---
-}
 
