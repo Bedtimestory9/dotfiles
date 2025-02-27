@@ -19,8 +19,6 @@ function fish_user_key_bindings
     bind \cw backward-kill-bigword
 end
 
-### laravel
-fish_add_path ~/.config/composer/vendor/bin:$path
 ### treesitter
 fish_add_path $home/.local/bin:$path
 ### npm
