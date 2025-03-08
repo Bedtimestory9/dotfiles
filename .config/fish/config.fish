@@ -19,12 +19,23 @@ function fish_user_key_bindings
     bind \cw backward-kill-bigword
 end
 
+function y
+	set tmp (mktemp -t "yazi-cwd.XXXXXX")
+	yazi $argv --cwd-file="$tmp"
+	if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+		builtin cd -- "$cwd"
+	end
+	rm -f -- "$tmp"
+end
+
 ### treesitter
 fish_add_path $home/.local/bin:$path
 ### npm
 set -gx npm_config_prefix "$home/.local"
 ### wine prefix
 set -gx WINEPREFIX "$home/.wine"
+### Weird mix_env
+set -gx MIX_ENV dev
 
 # For fcitx5
 set -gx GTK_IM_MODULE fcitx

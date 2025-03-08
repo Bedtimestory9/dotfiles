@@ -1,5 +1,3 @@
--- Set <space> as the leader key
--- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -693,7 +691,9 @@ require("lazy").setup({
 		-- "kepano/flexoki-neovim",
 		-- "rebelot/kanagawa.nvim",
 		-- "sainnhe/sonokai",
-"ribru17/bamboo.nvim",
+		-- "ribru17/bamboo.nvim",
+		"nuvic/flexoki-nvim",
+		name = "flexoki",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
 		init = function()
 			-- Load the colorscheme here.
@@ -703,9 +703,11 @@ require("lazy").setup({
 			-- vim.cmd.colorscheme("flexoki-dark")
 			-- vim.cmd.colorscheme("kanagawa")
 			-- vim.cmd.colorscheme("sonokai")
-			vim.cmd.colorscheme("bamboo")
+			-- vim.cmd.colorscheme("bamboo")
 			-- vim.cmd.colorscheme("tokyonight")
-
+			vim.cmd("colorscheme flexoki")
+			-- vim.cmd("colorscheme flexoki-moon")
+			-- vim.cmd("colorscheme flexoki-dawn")
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
 		end,
@@ -850,13 +852,7 @@ require("lazy").setup({
 				desc = "Open yazi at the current file",
 			},
 			{
-				-- Open in the current working directory
-				"<leader>cw",
-				"<cmd>Yazi cwd<cr>",
-				desc = "Open the file manager in nvim's working directory",
-			},
-			{
-				"<c-up>",
+				"<leader>+",
 				"<cmd>Yazi toggle<cr>",
 				desc = "Resume the last yazi session",
 			},
@@ -870,6 +866,26 @@ require("lazy").setup({
 			},
 		},
 	},
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup({
+				vim.keymap.set("n", "<leader>c", "<cmd>:ColorizerToggle<cr>"),
+				DEFAULT_OPTIONS = {
+					RGB = true, -- #RGB hex codes
+					RRGGBB = true, -- #RRGGBB hex codes
+					names = true, -- "Name" codes like Blue
+					RRGGBBAA = true, -- #RRGGBBAA hex codes
+					rgb_fn = true, -- CSS rgb() and rgba() functions
+					hsl_fn = true, -- CSS hsl() and hsla() functions
+					css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+					css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+					-- Available modes: foreground, background
+					mode = "background", -- Set the display mode.
+				},
+			})
+		end,
+	},
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
 	-- place them in the correct locations.
@@ -882,7 +898,7 @@ require("lazy").setup({
 	-- require 'kickstart.plugins.debug',
 	-- require 'kickstart.plugins.indent_line',
 	-- require 'kickstart.plugins.lint',
-	-- require 'kickstart.plugins.autopairs',
+	-- require("kickstart.plugins.autopairs"),
 	-- require 'kickstart.plugins.neo-tree',
 	-- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
