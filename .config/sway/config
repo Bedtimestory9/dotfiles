@@ -15,7 +15,9 @@ set $mouse "5426:110:Razer_Razer_DeathAdder_Essential"
 exec wl-paste -t text --watch clipman store --no-persist
 
 exec swaymsg "workspace 3; exec firefox"
-exec swaymsg "workspace 1; exec mullvad-vpn"
+exec swaymsg "workspace 1; exec $term fish ~/Documents/Scripts/python-todolist.fish"
+
+# exec swaymsg "workspace 1; exec mullvad-vpn"
 # exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -241,7 +243,7 @@ bindsym $mod+r mode "resize"
 #
 # Status Bar:
 #
-set $sway-default #285577
+set $sway-default #809ABC
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top

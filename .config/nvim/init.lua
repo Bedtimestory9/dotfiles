@@ -705,9 +705,8 @@ require("lazy").setup({
 			-- vim.cmd.colorscheme("sonokai")
 			-- vim.cmd.colorscheme("bamboo")
 			-- vim.cmd.colorscheme("tokyonight")
-			vim.cmd("colorscheme flexoki")
 			-- vim.cmd("colorscheme flexoki-moon")
-			-- vim.cmd("colorscheme flexoki-dawn")
+			vim.cmd("colorscheme flexoki-dawn")
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
 		end,
