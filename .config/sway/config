@@ -15,7 +15,7 @@ set $mouse "5426:110:Razer_Razer_DeathAdder_Essential"
 exec wl-paste -t text --watch clipman store --no-persist
 
 exec swaymsg "workspace 3; exec firefox"
-exec swaymsg "workspace 1; exec $term fish ~/Documents/Scripts/python-todolist.fish"
+# exec swaymsg "workspace 1; exec $term fish ~/Documents/Scripts/python-todolist.fish"
 
 # exec swaymsg "workspace 1; exec mullvad-vpn"
 # exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"
