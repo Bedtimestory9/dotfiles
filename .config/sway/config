@@ -14,7 +14,8 @@ set $mouse "5426:110:Razer_Razer_DeathAdder_Essential"
 # Persist after closing window
 exec wl-paste -t text --watch clipman store --no-persist
 
-exec swaymsg "workspace 3; exec firefox"
+exec swaymsg "workspace 2; exec firefox"
+exec swaymsg "workspace 3; exec $term tmux"
 # exec swaymsg "workspace 1; exec $term fish ~/Documents/Scripts/python-todolist.fish"
 
 # exec swaymsg "workspace 1; exec mullvad-vpn"
@@ -44,7 +45,7 @@ dim_inactive_colors.unfocused #000000FF
 dim_inactive_colors.urgent #900000FF
 
 # Move minimized windows into Scratchpad (enable|disable)
-scratchpad_minimize enable
+scratchpad_minimize disable
 
 gaps inner 2px
 ### Output configuration

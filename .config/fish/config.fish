@@ -4,6 +4,9 @@ end
 
 ## Alias
 alias sd "cd (find . -type d | fzf)"
+alias y "yazi"
+alias v "nvim"
+
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
 
@@ -15,7 +18,7 @@ function fish_user_key_bindings
     bind \ch 'backward-word'
     bind \cl 'forward-word'
     ### Auto-suggestion
-    bind \cs accept-autosuggestion
+    bind \cd accept-autosuggestion
     bind \cw backward-kill-bigword
 end
 
@@ -29,7 +32,7 @@ function y
 end
 
 ### treesitter
-fish_add_path $home/.local/bin:$path
+fish_add_path $home/.local/bin
 ### npm
 set -gx npm_config_prefix "$home/.local"
 ### wine prefix
@@ -47,6 +50,14 @@ set -gx PAGER 'nvim +Man!'
 set -gx EDITOR nvim
 set -gx VISUAL nvim
 
+set -gx __NV_PRIME_RENDER_OFFLOAD 1 
+set -gx __GLX_VENDOR_LIBRARY_NAME 'nvidia command'
+
+#set -gx http_proxy http://127.0.0.1:1080/
+#set -gx https_proxy $http_proxy
+#set -gx ftp_proxy $http_proxy
+#set -gx rsync_proxy $http_proxy
+#set -gx no_proxy "localhost,127.0.0.1,localaddress,.localdomain.com"
 
 #######################################################################
 # My network config
@@ -55,4 +66,6 @@ set -gx VISUAL nvim
 # 2. Install dhcpcd
 # 3. Disable SystemD-NetworkD and SystemD-ResolveD, along with services
 # 4. Disable aspm or it will crash
+
+# If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
 #######################################################################
