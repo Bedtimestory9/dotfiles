@@ -8,7 +8,7 @@ alias y "yazi"
 alias v "nvim"
 
 # Dotfiles manipulation
-alias config='/usr/bin/git --git-dir=$HOME/.myconf/ --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 fish_config theme choose Tomorrow\ Night\ Bright
 # >>> Keybinds >>>

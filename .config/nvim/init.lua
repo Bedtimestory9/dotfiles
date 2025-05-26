@@ -120,8 +120,8 @@ vim.keymap.set("n", "<C-i>", "<C-i>") -- Distinguish <Tab> from <C-i> in normal 
 vim.keymap.set("n", "<C-W>", "<cmd>set wrap!<cr>", { desc = "[W]rap text" })
 
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set("n", "<C-S-h>", "<cmd>wincmd h<cr>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-S-l>", "<cmd>wincmd l<cr>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<leader>h", "<cmd>wincmd h<cr>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<leader>l", "<cmd>wincmd l<cr>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<leader>j", "<cmd>wincmd j<cr>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<leader>k", "<cmd>wincmd k<cr>", { desc = "Move focus to the upper window" })
 --
@@ -553,6 +553,36 @@ require("lazy").setup({
 				mode = "",
 				desc = "[F]ormat buffer",
 			},
+			{
+				"<leader>tf",
+				function()
+					-- If autoformat is currently disabled for this buffer,
+					-- then enable it, otherwise disable it
+					if vim.b.disable_autoformat then
+						vim.cmd("FormatEnable")
+						vim.notify("Enabled autoformat for current buffer")
+					else
+						vim.cmd("FormatDisable!")
+						vim.notify("Disabled autoformat for current buffer")
+					end
+				end,
+				desc = "Toggle autoformat for current buffer",
+			},
+			{
+				"<leader>tF",
+				function()
+					-- If autoformat is currently disabled globally,
+					-- then enable it globally, otherwise disable it globally
+					if vim.g.disable_autoformat then
+						vim.cmd("FormatEnable")
+						vim.notify("Enabled autoformat globally")
+					else
+						vim.cmd("FormatDisable")
+						vim.notify("Disabled autoformat globally")
+					end
+				end,
+				desc = "Toggle autoformat globally",
+			},
 		},
 		opts = {
 			notify_on_error = false,
@@ -582,7 +612,6 @@ require("lazy").setup({
 			},
 		},
 	},
-
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
@@ -943,10 +972,10 @@ require("lazy").setup({
 		enabled = vim.fn.has("nvim-0.10.0") == 1,
 	},
 	{
-		"nvim-treesitter-context",
+		"nvim-treesitter/nvim-treesitter-context",
 		config = function()
 			require("treesitter-context").setup({
-				max_lines = 3,
+				max_lines = 5,
 				trim_scope = "inner",
 			})
 		end,
@@ -985,7 +1014,13 @@ require("lazy").setup({
 				sections = {
 					lualine_a = { "mode" },
 					lualine_b = {
-						{ "diff" },
+						{
+							"branch",
+							fmt = function(str)
+								local result = str.format("%-4s", string.sub(str, 1, 30))
+								return result
+							end,
+						},
 						{ "diagnostics" },
 					},
 					lualine_c = {
@@ -1001,9 +1036,9 @@ require("lazy").setup({
 							shorting_target = 40, -- Shortens path to leave 40 spaces in the window
 							-- for other components. (terrible name, any suggestions?)
 							symbols = {
-								modified = "[+]", -- Text to show when the file is modified.
-								readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
-								unnamed = "[No Name]", -- Text to show for unnamed buffers.
+								modified = "[M]", -- Text to show when the file is modified.
+								readonly = "[R]", -- Text to show when the file is non-modifiable or readonly.
+								unnamed = "[Empty]", -- Text to show for unnamed buffers.
 								newfile = "[New]", -- Text to show for newly created file before first write
 							},
 						},
@@ -1031,10 +1066,10 @@ require("lazy").setup({
 		"dnlhc/glance.nvim",
 		cmd = "Glance",
 	},
-	{
-		"sphamba/smear-cursor.nvim",
-		opts = {},
-	},
+	-- {
+	-- 	"sphamba/smear-cursor.nvim",
+	-- 	opts = {},
+	-- },
 	{
 		"sindrets/diffview.nvim",
 	},

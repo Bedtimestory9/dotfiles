@@ -34,7 +34,7 @@ wireless _first_ {
 battery all {
         last_full_capacity = true
         format = "%status %percentage" #%remaining
-        status_bat = "🔌"
+        # status_bat = "🔌"
         separator = false
         separator_block_width = 20
 }

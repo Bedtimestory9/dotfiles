@@ -24,34 +24,10 @@ exec swaymsg "workspace 3; exec $term tmux"
 # on the original workspace that the command was run on.
 set $menu dmenu_path | fuzzel | xargs swaymsg exec --
 
-### Appearance
-# window corner radius in px
-corner_radius 7
-
-# Window background blur
-blur on
-blur_xray off
-blur_passes 2
-blur_radius 5
-
-shadows on
-shadows_on_csd off
-shadow_blur_radius 20
-shadow_color #0000007F
-
-# inactive window fade amount. 0.0 = no dimming, 1.0 = fully dimmed
-default_dim_inactive 0.0
-dim_inactive_colors.unfocused #000000FF
-dim_inactive_colors.urgent #900000FF
-
-# Move minimized windows into Scratchpad (enable|disable)
-scratchpad_minimize disable
-
-gaps inner 2px
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ../../Media/Wallpapers/a_pair_of_playing_cards_on_a_black_surface.jpg fill
+# output * bg fill
 #
 # Example configuration:
 #
