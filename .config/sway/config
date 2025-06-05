@@ -7,18 +7,17 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term foot
+set $term alacritty
 set $mouse "5426:110:Razer_Razer_DeathAdder_Essential"
 # Your preferred application launcher
 
 # Persist after closing window
 exec wl-paste -t text --watch clipman store --no-persist
 
-exec swaymsg "workspace 2; exec firefox"
-exec swaymsg "workspace 3; exec $term tmux"
-# exec swaymsg "workspace 1; exec $term fish ~/Documents/Scripts/python-todolist.fish"
+# To run command with alacritty -e flag is required
+exec swaymsg "workspace 2; exec $term"
+exec swaymsg "workspace 3; exec firefox"
 
-# exec swaymsg "workspace 1; exec mullvad-vpn"
 # exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -99,8 +98,9 @@ set $menu dmenu_path | fuzzel | xargs swaymsg exec --
 #
 # Window_rules
 #
-    # for_window [app_id="foot"] floating enable
-    # for_window [app_id="foot"] resize set 1300 1080
+    for_window [shell="xwayland"] title_format "[XWayland] %title"
+    for_window [app_id="wechat"] floating enable, border none 
+    # for_window [title="Yazi" app_id="Alacritty"] floating enable, border none, inhibit_idle
 #
 # Moving around:
 #
@@ -109,7 +109,6 @@ set $menu dmenu_path | fuzzel | xargs swaymsg exec --
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
     bindsym $mod+Left focus left
     bindsym $mod+Down focus down
     bindsym $mod+Up focus up
@@ -210,8 +209,8 @@ bindsym $mod+r mode "resize"
     bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
     bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDO_SINK@ toggle
     bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-    bindsym XF86MonBrightnessDown exec brightnessctl set 2%-
-    bindsym XF86MonBrightnessUp exec brightnessctl set 2%+
+    bindsym XF86MonBrightnessDown exec brillo -A 5
+    bindsym XF86MonBrightnessUp exec brillo -A -5
     bindsym XF86AudioPlay exec playerctl play-pause
     bindsym XF86AudioNext exec playerctl next
     bindsym XF86AudioPrev exec playerctl previous
@@ -220,7 +219,6 @@ bindsym $mod+r mode "resize"
 #
 # Status Bar:
 #
-set $sway-default #809ABC
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
@@ -230,7 +228,6 @@ bar {
     status_command i3status
 
     colors {
-        statusline $sway-default
         background #32323215
         inactive_workspace #32323200 #32323200 #F4F4F4
     }
@@ -238,9 +235,9 @@ bar {
 
 
 # Property Name               Border    BG       Text    Indicator Child-border
-  client.focused              809ABC60  28557790 F4F4F4  809ABC80
+# client.focused              809ABC60  28557790 F4F4F4  809ABC80
 # client.focused_inactive     
-  client.unfocused            A9A6A960  4C4C4C50 3C393A
+# client.unfocused            A9A6A960  4C4C4C50 3C393A
 # client.urgent               
 # client.placeholder          
 include /etc/sway/config.d/*

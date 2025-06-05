@@ -1,0 +1,12 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/breeze.toml"
+]
+
+[font]
+normal = { family = "FiraCodeNerdFont"}
+size = 16
+
+# Fix Ctrl + i
+[keyboard]
+bindings = [ { key = 'I', mods = 'Control', chars =  "\u001b[105;5u" } ]

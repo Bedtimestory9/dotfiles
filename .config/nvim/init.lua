@@ -27,7 +27,8 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-	vim.opt.clipboard = "unnamedplus"
+	vim.opt.clipboard = "unnamed"
+	vim.opt.clipboard = "unnamedplus" -- For MacOS
 end)
 
 -- Enable break indent
@@ -73,8 +74,9 @@ vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+-- vim.g.tex_flavor = "latex"
 -- Fixing border vanishing
-vim.o.winborder = "rounded"
+-- vim.o.winborder = "rounded"
 
 -- Fix SASS/SCSS
 vim.cmd("autocmd FileType scss setl iskeyword+=@")
@@ -727,11 +729,7 @@ require("lazy").setup({
 			})
 		end,
 	},
-
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
+	{
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
 		--
 		-- "folke/tokyonight.nvim",
@@ -1063,15 +1061,28 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"dnlhc/glance.nvim",
-		cmd = "Glance",
+		"mfussenegger/nvim-dap",
 	},
-	-- {
-	-- 	"sphamba/smear-cursor.nvim",
-	-- 	opts = {},
-	-- },
 	{
-		"sindrets/diffview.nvim",
+		"windwp/nvim-ts-autotag",
+		config = function()
+			require("nvim-ts-autotag").setup({
+				opts = {
+					-- Defaults
+					enable_close = true, -- Auto close tags
+					enable_rename = true, -- Auto rename pairs of tags
+					enable_close_on_slash = false, -- Auto close on trailing </
+				},
+				-- Also override individual filetype configs, these take priority.
+				-- Empty by default, useful if one of the "opts" global settings
+				-- doesn't work well in a specific filetype
+				per_filetype = {
+					["html"] = {
+						enable_close = false,
+					},
+				},
+			})
+		end,
 	},
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
