@@ -6,6 +6,8 @@ end
 alias sd "cd (find . -type d | fzf)"
 alias y "yazi"
 alias v "nvim"
+alias s5 "proxy-ns"
+alias pnpx "pnpm exec"
 
 alias gs "git status"
 alias gco "git checkout"
@@ -80,3 +82,10 @@ set -gx VISUAL nvim
 
 # If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
 # If you are systemctl authenticating as: root, add your user to the wheel group
+
+# pnpm
+set -gx PNPM_HOME "/home/Lawrence/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end

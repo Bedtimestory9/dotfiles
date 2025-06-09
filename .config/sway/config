@@ -26,7 +26,8 @@ set $menu dmenu_path | fuzzel | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-# output * bg fill
+# install swaybg otherwise no bg will be displayed
+output * bg /home/Lawrence/Documents/wallpaper/pexels-catiamatos-1072179.jpg fill
 #
 # Example configuration:
 #

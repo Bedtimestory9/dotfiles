@@ -118,7 +118,6 @@ vim.keymap.set("n", "<S-Tab>", "<<")
 vim.keymap.set("v", "<Tab>", ">>")
 vim.keymap.set("v", "<S-Tab>", "<<")
 vim.keymap.set("n", "<C-i>", "<C-i>") -- Distinguish <Tab> from <C-i> in normal mode
-
 vim.keymap.set("n", "<C-W>", "<cmd>set wrap!<cr>", { desc = "[W]rap text" })
 
 --  See `:help wincmd` for a list of all window commands
@@ -1083,6 +1082,14 @@ require("lazy").setup({
 				},
 			})
 		end,
+	},
+	{
+		"rbong/vim-flog",
+		lazy = true,
+		cmd = { "Flog", "Flogsplit", "Floggit" },
+		dependencies = {
+			"tpope/vim-fugitive",
+		},
 	},
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
