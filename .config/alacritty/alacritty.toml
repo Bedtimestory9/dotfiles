@@ -1,7 +1,10 @@
 [general]
 import = [
-    "~/.config/alacritty/themes/themes/breeze.toml"
+    "~/.config/alacritty/themes/themes/ayu_dark.toml"
 ]
+
+[window]
+opacity = 0.95
 
 [font]
 normal = { family = "FiraCodeNerdFont"}
@@ -10,3 +13,5 @@ size = 15
 # Fix Ctrl + i
 [keyboard]
 bindings = [ { key = 'I', mods = 'Control', chars =  "\u001b[105;5u" } ]
+
+
