@@ -1,14 +1,15 @@
-if status is-interactive
+    if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
 ## Alias
 alias sd "cd (find . -type d | fzf)"
+alias pd "cd (find ~/Projects -type d | fzf)"
 alias y "yazi"
 alias v "nvim"
 alias s5 "proxy-ns"
 alias pn "pnpm"
-alias pnx "pnpm exec"
+alias pnx "pnpm dlx"
 
 alias gs "git status"
 alias gco "git checkout"
@@ -50,7 +51,7 @@ set -Ux PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/platform-tools
 
 # Then mount your overlay and export the Android home variable:
 
-#$ fuse-overlayfs -o squash_to_uid=$(id -u),squash_to_gid=$(id -g),lowerdir=$LOWER,upperdir=$UPPER,workdir=$WORK $ANDROID_HOME
+#$ sudo fuse-overlayfs -o squash_to_uid=$(id -u),squash_to_gid=$(id -g),lowerdir=$LOWER,upperdir=$UPPER,workdir=$WORK $ANDROID_HOME
 #$ export ANDROID_HOME
 
 # You can now use any Android tool (`sdk-manager` for instance) with your copy-on-write setup.
@@ -58,8 +59,6 @@ set -Ux PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/platform-tools
 
 #$ fusermount -u $ANDROID_HOME
 
-### treesitter
-fish_add_path $HOME/.local/bin
 ### npm
 set -x npm_config_prefix "$HOME/.local"
 ### Weird mix_env
@@ -81,12 +80,18 @@ set -gx VISUAL nvim
 # set -gx rsync_proxy $http_proxy
 # set -gx no_proxy "localhost,127.0.0.1,localaddress,.localdomain.com"
 
-# If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
-# If you are systemctl authenticating as: root, add your user to the wheel group
-
 # pnpm
 set -gx PNPM_HOME "/home/Lawrence/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# Elixir
+# enable history
+set -gx ERL_AFLAGS "-kernel shell_history enabled"
+
+# Tips:
+# If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
+# If you are systemctl authenticating as: root, add your user to the wheel group
+

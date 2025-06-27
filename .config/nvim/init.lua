@@ -263,10 +263,24 @@ require("lazy").setup({
 						i = {
 							["<C-j>"] = require("telescope.actions").move_selection_next,
 							["<C-k>"] = require("telescope.actions").move_selection_previous,
+							--["<CR>"] = actions.select_default + actions.center,
+							["<CR>"] = function(prompt_bufnr)
+								local actions = require("telescope.actions")
+								local current = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+								local v = current:_get_prompt()
+								vim.fn.setreg("/", v) -- search term
+								actions.select_default(prompt_bufnr)
+							end,
 						},
 					},
 				},
-				-- pickers = {}
+				pickers = {
+					live_grep = {
+						additional_args = function()
+							return { "--max-count=1" }
+						end,
+					},
+				},
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
@@ -669,9 +683,9 @@ require("lazy").setup({
 				-- No, but seriously. Please read `:help ins-completion`, it is really good!
 				mapping = cmp.mapping.preset.insert({
 					-- Select the [n]ext item
-					["<Tab>"] = cmp.mapping.select_next_item(),
+					["<C-j>"] = cmp.mapping.select_next_item(),
 					-- Select the [p]revious item
-					["<S-Tab>"] = cmp.mapping.select_prev_item(),
+					["<C-k>"] = cmp.mapping.select_prev_item(),
 
 					-- Scroll the documentation window [b]ack / [f]orward
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -691,7 +705,7 @@ require("lazy").setup({
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display
 					--  completions whenever it has completion options available.
-					["<C-Space>"] = cmp.mapping.complete({}),
+					["<Tab>"] = cmp.mapping.complete({}),
 
 					-- Think of <c-l> as moving to the right of your snippet expansion.
 					--  So if you have a snippet that's like:

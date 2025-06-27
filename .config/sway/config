@@ -102,12 +102,12 @@ gaps inner 1px
 #
 # Custom Keybinds
 #
-    bindsym $mod+p exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - Media/Screenshots/$(date +'%s_grim.png')
+    bindsym $mod+p exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - Downloads/pictures/$(date +'%s_grim.png')
 #
 # Window_rules
 #
     for_window [shell="xwayland"] title_format "[XWayland] %title"
-    for_window [app_id="wechat"] floating enable
+    # for_window [app_id="wechat"] floating enable
     for_window [class="Emulator"] floating enable
     # for_window [title="Yazi" app_id="Alacritty"] floating enable, border none, inhibit_idle
 #
