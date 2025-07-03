@@ -15,7 +15,7 @@ set $mouse "5426:110:Razer_Razer_DeathAdder_Essential"
 exec wl-paste -t text --watch clipman store --no-persist
 
 # To run command with alacritty -e flag is required
-exec swaymsg "workspace 2; exec $term"
+exec swaymsg "workspace 2; exec $term -e tmux"
 exec swaymsg "workspace 3; exec firefox"
 
 # exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"

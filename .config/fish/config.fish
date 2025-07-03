@@ -11,9 +11,11 @@ alias s5 "proxy-ns"
 alias pn "pnpm"
 alias pnx "pnpm dlx"
 
+## git
 alias gs "git status"
 alias gco "git checkout"
 alias gap "git add -p"
+alias gdf "git diff --"
 
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -40,13 +42,13 @@ function y
 end
 
 ### For Expo
-set -Ux CMAKE_POLICY_VERSION_MINIMUM 3.5
-set -Ux LOWER /opt/android-sdk
-set -Ux UPPER "$HOME/.local/android/.sdk/upper"
-set -Ux WORK "$HOME/.local/android/.sdk/work"
-set -Ux ANDROID_HOME "$HOME/.local/android/sdk"
-set -Ux ANDROID_SDK_ROOT "$HOME/.local/android/sdk"
-set -Ux PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/platform-tools
+# set -Ux CMAKE_POLICY_VERSION_MINIMUM 3.5
+# set -Ux LOWER /opt/android-sdk
+# set -Ux UPPER "$HOME/.local/android/.sdk/upper"
+# set -Ux WORK "$HOME/.local/android/.sdk/work"
+set -Ux ANDROID_HOME "/opt/android-sdk/"
+set -Ux ANDROID_SDK_ROOT "/opt/android-sdk/"
+# set -Ux PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/platform-tools
 # set -x QT_QPA_PLATFORM "xcb"
 
 # Then mount your overlay and export the Android home variable:
@@ -70,7 +72,7 @@ set -gx XMODIFIERS @im=fcitx
 set -gx QT_IM_MODULE fcitx
 
 # For Manpage color
-set -gx PAGER 'nvim +Man!'
+set -gx PAGER less
 set -gx EDITOR nvim
 set -gx VISUAL nvim
 
@@ -89,7 +91,7 @@ end
 
 # Elixir
 # enable history
-set -gx ERL_AFLAGS "-kernel shell_history enabled"
+export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled '\"$HOME/.erlang_history\"'"
 
 # Tips:
 # If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style

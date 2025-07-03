@@ -7,7 +7,7 @@ import = [
 opacity = 0.55
 
 [font]
-normal = { family = "FiraCodeNerdFont"}
+normal = { family = "RecMonoLinearNerdFont"}
 size = 15
 
 # Fix Ctrl + i
