@@ -3,7 +3,7 @@
 end
 
 ## Alias
-alias sd "cd (find . -type d | fzf)"
+alias sd "nvim (find ~/Documents -type f | fzf)"
 alias pd "cd (find ~/Projects -type d | fzf)"
 alias y "yazi"
 alias v "nvim"
@@ -20,7 +20,7 @@ alias gdf "git diff --"
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-fish_config theme choose Tomorrow\ Night\ Bright
+fish_config theme choose Lava
 # >>> Keybinds >>>
 function fish_user_key_bindings
     bind \ck 'up-or-search'
@@ -42,34 +42,18 @@ function y
 end
 
 ### For Expo
-# set -Ux CMAKE_POLICY_VERSION_MINIMUM 3.5
-# set -Ux LOWER /opt/android-sdk
-# set -Ux UPPER "$HOME/.local/android/.sdk/upper"
-# set -Ux WORK "$HOME/.local/android/.sdk/work"
 set -Ux ANDROID_HOME "/opt/android-sdk/"
 set -Ux ANDROID_SDK_ROOT "/opt/android-sdk/"
-# set -Ux PATH $PATH $ANDROID_HOME/tools $ANDROID_HOME/platform-tools
-# set -x QT_QPA_PLATFORM "xcb"
-
-# Then mount your overlay and export the Android home variable:
-
-#$ sudo fuse-overlayfs -o squash_to_uid=$(id -u),squash_to_gid=$(id -g),lowerdir=$LOWER,upperdir=$UPPER,workdir=$WORK $ANDROID_HOME
-#$ export ANDROID_HOME
-
-# You can now use any Android tool (`sdk-manager` for instance) with your copy-on-write setup.
-# You can unmount it as with any other FUSE fs:
-
-#$ fusermount -u $ANDROID_HOME
 
 ### npm
 set -x npm_config_prefix "$HOME/.local"
-### Weird mix_env
-set -x MIX_ENV dev
 
 # For fcitx5
 set -gx GTK_IM_MODULE fcitx
 set -gx XMODIFIERS @im=fcitx
 set -gx QT_IM_MODULE fcitx
+set -gx SDL_IM_MODULE fcitx
+# set -gx GLFW_IM_MODULE ibus
 
 # For Manpage color
 set -gx PAGER less
@@ -91,7 +75,11 @@ end
 
 # Elixir
 # enable history
-export ELIXIR_ERL_OPTIONS="-kernel shell_history enabled '\"$HOME/.erlang_history\"'"
+set -x ERL_AFLAGS "-kernel shell_history enabled"
+### Weird mix_env
+set -x MIX_ENV dev
+# set -x ERL_AFLAGS "-kernel shell_history enabled"
+
 
 # Tips:
 # If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style

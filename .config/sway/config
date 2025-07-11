@@ -88,7 +88,7 @@ gaps inner 1px
 #
 # Basics:
 #
-    bindsym $mod+Return exec $term
+    bindsym $mod+Return exec $term -e tmux
     bindsym $mod+Shift+q kill
     bindsym $mod+d exec $menu
     # mouse button for dragging.
