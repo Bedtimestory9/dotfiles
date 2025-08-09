@@ -1,4 +1,4 @@
-    if status is-interactive
+if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
@@ -20,7 +20,7 @@ alias gdf "git diff --"
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-fish_config theme choose Lava
+fish_config theme choose flexoki-dark
 # >>> Keybinds >>>
 function fish_user_key_bindings
     bind \ck 'up-or-search'
@@ -33,12 +33,12 @@ function fish_user_key_bindings
 end
 
 function y
-	set tmp (mktemp -t "yazi-cwd.XXXXXX")
-	yazi $argv --cwd-file="$tmp"
-	if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-		builtin cd -- "$cwd"
-	end
-	rm -f -- "$tmp"
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file="$tmp"
+    if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+	    builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
 end
 
 ### For Expo
@@ -78,10 +78,9 @@ end
 set -x ERL_AFLAGS "-kernel shell_history enabled"
 ### Weird mix_env
 set -x MIX_ENV dev
-# set -x ERL_AFLAGS "-kernel shell_history enabled"
-
 
 # Tips:
 # If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
 # If you are systemctl authenticating as: root, add your user to the wheel group
 
+set PATH $PATH:/home/Lawrence/.local/bin

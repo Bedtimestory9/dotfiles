@@ -3,7 +3,10 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = true
+vim.g.have_nerd_font = true -- Switch to light theme vim.o.background = "light"
+
+-- nvim-cmp recommended setting
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { link = "CmpItemAbbrMatchCM" })
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -95,7 +98,7 @@ vim.cmd("autocmd FileType scss setl iskeyword+=-")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+-- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -110,25 +113,24 @@ vim.cmd("autocmd FileType scss setl iskeyword+=@")
 vim.cmd("autocmd FileType scss setl iskeyword+=$")
 vim.cmd("autocmd FileType scss setl iskeyword+=-")
 
--- Custom Keymaps
 vim.keymap.set("n", "<Tab>", ">>")
 vim.keymap.set("n", "<S-Tab>", "<<")
 vim.keymap.set("v", "<Tab>", ">>")
 vim.keymap.set("v", "<S-Tab>", "<<")
-vim.keymap.set("n", "<C-i>", "<C-i>") -- Distinguish <Tab> from <C-i> in normal mode
-vim.keymap.set("n", "<C-W>", "<cmd>set wrap!<cr>", { desc = "[W]rap text" })
+-- Distinguish <Tab> from <C-i> in normal mode
+vim.keymap.set("n", "<C-i>", "<C-i>")
 
---  See `:help wincmd` for a list of all window commands
+-- Custom Keymaps
+vim.keymap.set("n", "<C-W>", "<cmd>set wrap!<cr>", { desc = "[W]rap text" })
+-- vim.api.nvim_set_keymap("n", "<C-J>", "6j", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<C-K>", "6k", { noremap = true, silent = true })
+
+-- See `:help wincmd` for a list of all window commands
 vim.keymap.set("n", "<leader>h", "<cmd>wincmd h<cr>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<leader>l", "<cmd>wincmd l<cr>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<leader>j", "<cmd>wincmd j<cr>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<leader>k", "<cmd>wincmd k<cr>", { desc = "Move focus to the upper window" })
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -138,11 +140,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- Set GIT_EDITOR if inside Neovim and nvr is available
-if vim.fn.has("nvim") == 1 and vim.fn.executable("nvr") == 1 then
-	vim.env.GIT_EDITOR = "nvr -cc split --remote-wait"
-end
-
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "gitcommit", "gitrebase", "gitconfig" },
 	callback = function()
@@ -150,12 +147,10 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- [[ Install `lazy.nvim` plugin manager ]]
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=master", lazyrepo, lazypath })
 	if vim.v.shell_error ~= 0 then
 		error("Error cloning lazy.nvim:\n" .. out)
 	end
@@ -174,9 +169,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
-	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-
 	-- NOTE: Plugins can also be added by using a table,
 	-- with the first argument being the link and the following
 	-- keys can be used to configure plugin behavior/loading/etc.
@@ -545,20 +538,10 @@ require("lazy").setup({
 			})
 		end,
 	},
-
 	{ -- Autoformat
 		"stevearc/conform.nvim",
-		event = { "BufWritePre" },
-		cmd = { "ConformInfo" },
+		lazy = false,
 		keys = {
-			{
-				"<leader>f",
-				function()
-					require("conform").format({ async = true, lsp_format = "fallback" })
-				end,
-				mode = "",
-				desc = "[F]ormat buffer",
-			},
 			{
 				"<leader>tf",
 				function()
@@ -593,30 +576,49 @@ require("lazy").setup({
 		opts = {
 			notify_on_error = false,
 			format_on_save = function(bufnr)
-				-- Disable "format_on_save lsp_fallback" for languages that don't
-				-- have a well standardized coding style. You can add additional
-				-- languages here or re-enable it for the disabled ones.
-				local disable_filetypes = { c = true, cpp = true }
-				local lsp_format_opt
-				if disable_filetypes[vim.bo[bufnr].filetype] then
-					lsp_format_opt = "never"
-				else
-					lsp_format_opt = "fallback"
+				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+					return
 				end
+				local disable_filetypes = { c = false, cpp = false }
 				return {
 					timeout_ms = 500,
-					lsp_format = lsp_format_opt,
+					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
 				}
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
-				-- Conform can also run multiple formatters sequentially
-				-- python = { "isort", "black" },
-				--
-				-- You can use 'stop_after_first' to run the first available formatter from the list
-				-- javascript = { "prettierd", "prettier", stop_after_first = true },
+				python = { "black" },
+				javascript = { "prettierd", "prettier" },
+				typescript = { "prettierd", "prettier" },
+				typescriptreact = { "prettierd", "prettier" },
+				javascriptreact = { "prettierd", "prettier" },
+				css = { "prettierd", "prettier" },
+				cs = { "csharpier" },
 			},
 		},
+		config = function(_, opts)
+			require("conform").setup(opts)
+
+			vim.api.nvim_create_user_command("FormatDisable", function(args)
+				if args.bang then
+					-- :FormatDisable! disables autoformat for this buffer only
+					vim.b.disable_autoformat = true
+				else
+					-- :FormatDisable disables autoformat globally
+					vim.g.disable_autoformat = true
+				end
+			end, {
+				desc = "Disable autoformat-on-save",
+				bang = true, -- allows the ! variant
+			})
+
+			vim.api.nvim_create_user_command("FormatEnable", function()
+				vim.b.disable_autoformat = false
+				vim.g.disable_autoformat = false
+			end, {
+				desc = "Re-enable autoformat-on-save",
+			})
+		end,
 	},
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
@@ -741,26 +743,71 @@ require("lazy").setup({
 		-- "rebelot/kanagawa.nvim",
 		-- "sainnhe/sonokai",
 		-- "ribru17/bamboo.nvim",
-		"nuvic/flexoki-nvim",
-		name = "flexoki",
-		priority = 1000, -- Make sure to load this before all the other start plugins.
+		"yorik1984/newpaper.nvim",
+		-- "Bedtimestory9/flexoki-newpaper.nvim",
+		-- "cpplain/flexoki.nvim",
+		-- for flexoki
+		-- lazy = false,
+		-- priority = 1000,
+		-- opts = {},
+		-- config = true,
+		-- init = function()
+		-- 	require("flexoki").setup({
+		-- 		plugins = {
+		-- 			"gitsigns", -- gitsigns.nvim
+		-- 			"nvim_treesitter_context",
+		-- 			"which_key", -- which-key.nvim
+		-- 		},
+		-- 	})
+		--
+		-- 	require("lualine").setup({
+		-- 		options = {
+		-- 			theme = "flexoki",
+		-- 		},
+		-- 	})
+		--
+		-- 	vim.cmd.colorscheme("flexoki")
+		-- end,
+		--
+		-- for newpaper config
+		config = true,
 		init = function()
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			--
-			-- vim.cmd.colorscheme("flexoki-dark")
-			-- vim.cmd.colorscheme("kanagawa")
-			-- vim.cmd.colorscheme("sonokai")
-			-- vim.cmd.colorscheme("bamboo")
-			-- vim.cmd.colorscheme("tokyonight")
-			vim.cmd("colorscheme flexoki-dawn")
-			-- vim.cmd("colorscheme flexoki-moon")
-			-- You can configure highlights by doing something like:
-			vim.cmd.hi("Comment gui=none")
+			require("newpaper").setup({
+				style = "light",
+				borders = true,
+				keywords = "italic",
+				colors = {
+					bg = "#FFFCF0",
+				},
+				colors_advanced = {
+					msgarea_bg = "#FFFCF0",
+					normal_bg = "#FFFCF0",
+					winbar_bg = "#FFFCF0",
+					tabline_active_bg = "#FFFCF0",
+					sb_bg = "#FFFCF0",
+					float_bg = "#F2F0E5",
+					telescope_bg = "#FFFCF0",
+					term_bg = "#FFFCF0",
+					term_fl_bg = "#FFFCF0",
+					linenumber_bg = "#FFFCF0",
+					git_sign_bg = "#FFFCF0",
+				},
+			})
+			vim.cmd.colorscheme("newpaper")
 		end,
+		-- Load the colorscheme here.
+		-- Like many other themes, this one has different styles, and you could load
+		-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+		--
+		-- vim.cmd.colorscheme("kanagawa")
+		-- vim.cmd.colorscheme("sonokai")
+		-- vim.cmd.colorscheme("bamboo")
+		-- vim.cmd.colorscheme("tokyonight"),
+		-- vim.cmd.colorscheme("flexoki"),
+		-- vim.cmd.colorscheme("newpaper"),
+		-- You can configure highlights by doing something like:
+		-- vim.cmd.hi("Comment gui=none")
 	},
-
 	-- Highlight todo, notes, etc in comments
 	{
 		"folke/todo-comments.nvim",
@@ -787,7 +834,12 @@ require("lazy").setup({
 			require("mini.surround").setup()
 			-- require("mini.icons").setup()
 			require("mini.git").setup()
-			require("mini.indentscope").setup()
+			require("mini.indentscope").setup({
+				draw = {
+					delay = 50,
+				},
+				symbol = "╎",
+			})
 
 			-- Simple and easy statusline.
 			--  You could remove this setup call if you don't like it,
@@ -887,16 +939,36 @@ require("lazy").setup({
 			end)
 		end,
 	},
-
 	{
 		"folke/trouble.nvim",
-		opts = {}, -- for default options, refer to the configuration section for custom setup.
+		opts = {
+			modes = {
+				preview_float = {
+					mode = "diagnostics",
+					preview = {
+						type = "float",
+						relative = "editor",
+						border = "rounded",
+						title = "Preview",
+						title_pos = "center",
+						position = { 0, -2 },
+						size = { width = 0.3, height = 0.3 },
+						zindex = 200,
+					},
+				},
+			},
+		}, -- for default options, refer to the configuration section for custom setup.
 		cmd = "Trouble",
 		keys = {
 			{
-				"<leader>e",
-				"<cmd>Trouble diagnostics toggle focus=true<cr>",
+				"<leader>q",
+				"<cmd>Trouble diagnostics toggle<cr>",
 				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
 			},
 			{
 				"<leader>cs",
@@ -977,7 +1049,7 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter-context",
 		config = function()
 			require("treesitter-context").setup({
-				max_lines = 5,
+				-- max_lines = 5,
 				trim_scope = "inner",
 			})
 		end,
@@ -1101,32 +1173,33 @@ require("lazy").setup({
 		event = { "CursorMoved", "WinScrolled" },
 		opts = {},
 	},
-	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-	-- init.lua. If you want these files, they are in the repository, so you can just download them and
-	-- place them in the correct locations.
-
-	-- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-	--
-	--  Here are some example plugins that I've included in the Kickstart repository.
-	--  Uncomment any of the lines below to enable them (you will need to restart nvim).
-	--
-	-- require 'kickstart.plugins.debug',
-	-- require 'kickstart.plugins.indent_line',
-	-- require 'kickstart.plugins.lint',
-	-- require("kickstart.plugins.autopairs"),
-	-- require 'kickstart.plugins.neo-tree',
-	-- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
-
-	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-	--    This is the easiest way to modularize your config.
-	--
-	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-	-- { import = 'custom.plugins' },
-	--
-	-- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-	-- Or use telescope!
-	-- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-	-- you can continue same window with `<space>sr` which resumes last telescope search
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		opts = {
+			bullet = {
+				right_pad = 1,
+			},
+		},
+	},
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		---@type Flash.Config
+		opts = {},
+    -- stylua: ignore
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+	},
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`

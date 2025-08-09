@@ -1,17 +1,21 @@
 [general]
 import = [
-    "~/.config/alacritty/themes/themes/google.toml"
+    "~/.config/alacritty/themes/themes/flexoki.toml"
 ]
 
 [window]
-opacity = 0.55
+opacity = 0.85
 
 [font]
 normal = { family = "RecMonoLinearNerdFont"}
-size = 16
+size = 17.5
 
 # Fix Ctrl + i
 [keyboard]
 bindings = [ { key = 'I', mods = 'Control', chars =  "\u001b[105;5u" } ]
 
+# Fix cursor inverting color
+[colors]
+cursor = { text = "CellBackground", cursor = "CellForeground" }
+vi_mode_cursor = { text = "CellBackground", cursor = "CellForeground" }
 

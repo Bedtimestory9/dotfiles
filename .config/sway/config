@@ -17,6 +17,7 @@ exec wl-paste -t text --watch clipman store --no-persist
 # To run command with alacritty -e flag is required
 exec swaymsg "workspace 2; exec $term -e tmux"
 exec swaymsg "workspace 3; exec firefox"
+exec swaymsg "workspace 1; exec obsidian"
 
 # exec swaymsg "workspace 1; exec /usr/local/Astrill/astrill"
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -27,7 +28,7 @@ set $menu dmenu_path | fuzzel | xargs swaymsg exec --
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # install swaybg otherwise no bg will be displayed
-output * bg /home/Lawrence/Documents/wallpaper/pexels-catiamatos-1072179.jpg fill
+output * bg /home/Lawrence/Documents/wallpaper/81zoxd9h9xj91.jpg fill
 #
 # Example configuration:
 #
@@ -103,12 +104,13 @@ gaps inner 1px
 # Custom Keybinds
 #
     bindsym $mod+p exec swaymsg -t get_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | grim -g - Downloads/pictures/$(date +'%s_grim.png')
-#
+    bindsym $mod+Shift+p exec grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:- | wl-copy
 # Window_rules
 #
     for_window [shell="xwayland"] title_format "[XWayland] %title"
-    # for_window [app_id="wechat"] floating enable
+    for_window [app_id="wechat"] floating enable
     for_window [class="Emulator"] floating enable
+    for_window [class="obsidian"] floating enable
     # for_window [title="Yazi" app_id="Alacritty"] floating enable, border none, inhibit_idle
 #
 # Moving around:
@@ -237,14 +239,14 @@ bar {
     status_command i3status
 
     colors {
-        background #32323215
-        inactive_workspace #32323200 #32323200 #F4F4F4
+        background #32323275
+        inactive_workspace #32323200 #32323200 #323232
     }
 }
 
 
 # Property Name               Border    BG       Text    Indicator Child-border
-# client.focused              809ABC60  28557790 F4F4F4  809ABC80
+# client.focused              #809ABC  28557790 F4F4F4  809ABC80
 # client.focused_inactive     
 # client.unfocused            A9A6A960  4C4C4C50 3C393A
 # client.urgent               
