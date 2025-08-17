@@ -103,7 +103,30 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
+
+-- -- Auto recover and delete swap if no other instance is using it
+-- local api = vim.api
 --
+-- local function augroup(name)
+-- 	return api.nvim_create_augroup("lawrence-lazynvim" .. name, { clear = true })
+-- end
+--
+-- api.nvim_create_autocmd("SwapExists", {
+-- 	once = true, -- runs only once
+-- 	group = augroup("Recover"),
+-- 	callback = function()
+-- 		local swapname = vim.v.swapname
+-- 		if swapname and swapname ~= "" then
+-- 			pcall(function()
+-- 				vim.cmd("recover")
+-- 			end)
+-- 			pcall(os.remove, swapname)
+-- 			vim.notify("Recovered and removed swap: " .. swapname, vim.log.levels.INFO, { title = "nvim" })
+-- 		end
+-- 		vim.v.swapchoice = "o" -- 'o' = open recovered file
+-- 	end,
+-- 	desc = "Automatically recover and delete swap file if no other instance is using it",
+-- })
 
 -- Fix SASS/SCSS
 vim.cmd("autocmd FileType scss setl iskeyword+=@")
@@ -243,6 +266,14 @@ require("lazy").setup({
 				--  All the info you're looking for is in `:help telescope.setup()`
 				--
 				defaults = {
+					-- layout_strategy = "vertical",
+					-- layout_config = {
+					-- 	height = vim.o.lines, -- maximally available lines width = vim.o.columns,
+					-- 	-- maximally available columns
+					-- 	prompt_position = "top",
+					-- 	preview_height = 0.6,
+					-- 	-- 60% of available lines
+					-- },
 					mappings = {
 						i = {
 							["<C-j>"] = require("telescope.actions").move_selection_next,
@@ -267,7 +298,11 @@ require("lazy").setup({
 				},
 				extensions = {
 					["ui-select"] = {
-						require("telescope.themes").get_dropdown(),
+						require("telescope.themes").get_dropdown({
+							previewer = true,
+							shorten_path = true,
+							layout_strategy = "horizontal",
+						}),
 					},
 				},
 			})
@@ -777,20 +812,20 @@ require("lazy").setup({
 				borders = true,
 				keywords = "italic",
 				colors = {
-					bg = "#FFFCF0",
+					bg = "#FFFBEF",
 				},
 				colors_advanced = {
-					msgarea_bg = "#FFFCF0",
-					normal_bg = "#FFFCF0",
-					winbar_bg = "#FFFCF0",
-					tabline_active_bg = "#FFFCF0",
-					sb_bg = "#FFFCF0",
+					msgarea_bg = "#FFFBEF",
+					normal_bg = "#FFFBEF",
+					winbar_bg = "#FFFBEF",
+					tabline_active_bg = "#FFFBEF",
+					sb_bg = "#FFFBEF",
 					float_bg = "#F2F0E5",
-					telescope_bg = "#FFFCF0",
-					term_bg = "#FFFCF0",
-					term_fl_bg = "#FFFCF0",
-					linenumber_bg = "#FFFCF0",
-					git_sign_bg = "#FFFCF0",
+					telescope_bg = "#FFFBEF",
+					term_bg = "#FFFBEF",
+					term_fl_bg = "#FFFBEF",
+					linenumber_bg = "#FFFBEF",
+					git_sign_bg = "#FFFBEF",
 				},
 			})
 			vim.cmd.colorscheme("newpaper")
@@ -931,10 +966,10 @@ require("lazy").setup({
 				harpoon:list():select(4)
 			end)
 			-- Toggle previous & next buffers stored within Harpoon list
-			vim.keymap.set("n", "<C-k>", function()
+			vim.keymap.set("n", "<C-h>", function()
 				harpoon:list():prev()
 			end)
-			vim.keymap.set("n", "<C-j>", function()
+			vim.keymap.set("n", "<C-l>", function()
 				harpoon:list():next()
 			end)
 		end,

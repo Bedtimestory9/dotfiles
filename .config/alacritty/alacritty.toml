@@ -8,7 +8,7 @@ opacity = 0.85
 
 [font]
 normal = { family = "RecMonoLinearNerdFont"}
-size = 17.5
+size = 16
 
 # Fix Ctrl + i
 [keyboard]

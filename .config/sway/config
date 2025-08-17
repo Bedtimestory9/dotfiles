@@ -111,6 +111,7 @@ gaps inner 1px
     for_window [app_id="wechat"] floating enable
     for_window [class="Emulator"] floating enable
     for_window [class="obsidian"] floating enable
+    for_window [app_id="Alacritty"] floating enable, resize set width 1500 height 1052, move position center
     # for_window [title="Yazi" app_id="Alacritty"] floating enable, border none, inhibit_idle
 #
 # Moving around:
