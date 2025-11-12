@@ -78,6 +78,7 @@ vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.wrap = false
+vim.opt.termguicolors = true
 -- vim.g.tex_flavor = "latex"
 -- Fixing border vanishing
 -- vim.o.winborder = "rounded"
@@ -173,7 +174,7 @@ vim.api.nvim_create_autocmd("FileType", {
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=master", lazyrepo, lazypath })
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 	if vim.v.shell_error ~= 0 then
 		error("Error cloning lazy.nvim:\n" .. out)
 	end
@@ -777,13 +778,13 @@ require("lazy").setup({
 		-- "kepano/flexoki-neovim",
 		-- "rebelot/kanagawa.nvim",
 		-- "sainnhe/sonokai",
-		-- "ribru17/bamboo.nvim",
-		"yorik1984/newpaper.nvim",
+		"ribru17/bamboo.nvim",
+		-- "yorik1984/newpaper.nvim",
 		-- "Bedtimestory9/flexoki-newpaper.nvim",
 		-- "cpplain/flexoki.nvim",
 		-- for flexoki
 		-- lazy = false,
-		-- priority = 1000,
+		priority = 1000,
 		-- opts = {},
 		-- config = true,
 		-- init = function()
@@ -807,28 +808,28 @@ require("lazy").setup({
 		-- for newpaper config
 		config = true,
 		init = function()
-			require("newpaper").setup({
-				style = "light",
-				borders = true,
-				keywords = "italic",
-				colors = {
-					bg = "#FFFBEF",
-				},
-				colors_advanced = {
-					msgarea_bg = "#FFFBEF",
-					normal_bg = "#FFFBEF",
-					winbar_bg = "#FFFBEF",
-					tabline_active_bg = "#FFFBEF",
-					sb_bg = "#FFFBEF",
-					float_bg = "#F2F0E5",
-					telescope_bg = "#FFFBEF",
-					term_bg = "#FFFBEF",
-					term_fl_bg = "#FFFBEF",
-					linenumber_bg = "#FFFBEF",
-					git_sign_bg = "#FFFBEF",
-				},
-			})
-			vim.cmd.colorscheme("newpaper")
+			-- require("newpaper").setup({
+			--   style = "light",
+			--   borders = true,
+			--   keywords = "italic",
+			--   colors = {
+			--     bg = "#FFFBEF",
+			--   },
+			--   colors_advanced = {
+			--     msgarea_bg = "#FFFBEF",
+			--     normal_bg = "#FFFBEF",
+			--     winbar_bg = "#FFFBEF",
+			--     tabline_active_bg = "#FFFBEF",
+			--     sb_bg = "#FFFBEF",
+			--     float_bg = "#F2F0E5",
+			--     telescope_bg = "#FFFBEF",
+			--     term_bg = "#FFFBEF",
+			--     term_fl_bg = "#FFFBEF",
+			--     linenumber_bg = "#FFFBEF",
+			--     git_sign_bg = "#FFFBEF",
+			--   },
+			-- })
+			vim.cmd.colorscheme("bamboo")
 		end,
 		-- Load the colorscheme here.
 		-- Like many other themes, this one has different styles, and you could load
@@ -1222,18 +1223,15 @@ require("lazy").setup({
 		},
 	},
 	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		---@type Flash.Config
-		opts = {},
-    -- stylua: ignore
-    keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-    },
+		"jiaoshijie/undotree",
+		---@module 'undotree.collector'
+		---@type UndoTreeCollector.Opts
+		opts = {
+			-- your options
+		},
+		keys = { -- load the plugin only when using it's keybinding:
+			{ "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
+		},
 	},
 })
 

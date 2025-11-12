@@ -7,15 +7,14 @@ alias sd "nvim (find ~/Documents -type f | fzf)"
 alias pd "cd (find ~/Projects -type d | fzf)"
 alias y "yazi"
 alias v "nvim"
-alias s5 "proxy-ns"
-alias pn "pnpm"
-alias pnx "pnpm dlx"
+# alias s5 "proxy-ns"
 
 ## git
 alias gs "git status"
 alias gco "git checkout"
 alias gap "git add -p"
 alias gdf "git diff --"
+alias s5 "env {http,https}_proxy=socks5://127.0.0.1:1080"
 
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
