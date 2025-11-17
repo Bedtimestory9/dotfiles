@@ -10,7 +10,9 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias v="nvim"
+alias pd='cd "$(find ~/Projects -type d | fzf)"'
 alias s5="env {http,https}_proxy=socks5://127.0.0.1:1080"
+alias ..="cd .."
 
 # Auto-suggestion
 export ZSH_AUTOSUGGEST_STRATEGY=(completion match_prev_cmd history )
@@ -35,6 +37,15 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+# Android Development
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+# IOS Development
+export GEM_HOME=$HOME/.gem
+export PATH=$GEM_HOME/bin:$PATH
+
 # To activate the autosuggestions, add the following at the end of your .zshrc:
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Theme powerlevel10k
@@ -43,3 +54,7 @@ source /usr/local/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # Substring search
 source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+# Ruby MacOS
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.4.7

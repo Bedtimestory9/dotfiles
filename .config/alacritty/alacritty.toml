@@ -1,3 +1,6 @@
+[terminal]
+shell = { program = "/usr/local/bin/fish", args = ["-l"] }
+
 [general]
 import = [
     "~/.config/alacritty/themes/themes/flexoki.toml"
@@ -7,8 +10,8 @@ import = [
 opacity = 0.85
 
 [font]
-normal = { family = "RecMonoLinearNerdFont"}
-size = 16
+normal = { family = "RecMonoLinear Nerd Font"}
+size = 21
 
 # Fix Ctrl + i
 [keyboard]

@@ -1,7 +1,3 @@
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-end
-
 ## Alias
 alias sd "nvim (find ~/Documents -type f | fzf)"
 alias pd "cd (find ~/Projects -type d | fzf)"
@@ -17,6 +13,8 @@ alias s5 "env {http,https}_proxy=socks5://127.0.0.1:1080"
 
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+set fish_greeting
 
 fish_config theme choose flexoki-dark
 # >>> Keybinds >>>
@@ -44,19 +42,19 @@ set -Ux ANDROID_HOME "/opt/android-sdk/"
 set -Ux ANDROID_SDK_ROOT "/opt/android-sdk/"
 
 ### npm
-set -x npm_config_prefix "$HOME/.local"
+set -Ux npm_config_prefix "$HOME/.local"
 
 # For fcitx5
-set -gx GTK_IM_MODULE fcitx
-set -gx XMODIFIERS @im=fcitx
-set -gx QT_IM_MODULE fcitx
-set -gx SDL_IM_MODULE fcitx
+set -Ux GTK_IM_MODULE fcitx
+set -Ux XMODIFIERS @im=fcitx
+set -Ux QT_IM_MODULE fcitx
+set -Ux SDL_IM_MODULE fcitx
 # set -gx GLFW_IM_MODULE ibus
 
 # For Manpage color
-set -gx PAGER less
-set -gx EDITOR nvim
-set -gx VISUAL nvim
+set -Ux PAGER less
+set -Ux EDITOR nvim
+set -Ux VISUAL nvim
 
 # set -gx http_proxy socks5://127.0.0.1:1080
 # set -gx https_proxy $http_proxy
@@ -65,9 +63,9 @@ set -gx VISUAL nvim
 # set -gx no_proxy "localhost,127.0.0.1,localaddress,.localdomain.com"
 
 # pnpm
-set -gx PNPM_HOME "/home/Lawrence/.local/share/pnpm"
+set -Ux PNPM_HOME "/home/Lawrence/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+  set -Ux PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
 
@@ -79,6 +77,4 @@ set -x MIX_ENV dev
 
 # Tips:
 # If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
-# If you are systemctl authenticating as: root, add your user to the wheel group
-
-set PATH $PATH:/home/Lawrence/.local/bin
+# WARN: Don't do this `set PATH $PATH:/home/Lawrence/.local/bin`, it causes a massive slow
