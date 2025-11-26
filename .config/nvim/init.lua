@@ -79,6 +79,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.wrap = false
 vim.opt.termguicolors = true
+vim.o.winborder = "rounded"
 -- vim.g.tex_flavor = "latex"
 -- Fixing border vanishing
 -- vim.o.winborder = "rounded"
@@ -579,7 +580,7 @@ require("lazy").setup({
 		lazy = false,
 		keys = {
 			{
-				"<leader>tf",
+				"<leader>f",
 				function()
 					-- If autoformat is currently disabled for this buffer,
 					-- then enable it, otherwise disable it
@@ -594,7 +595,7 @@ require("lazy").setup({
 				desc = "Toggle autoformat for current buffer",
 			},
 			{
-				"<leader>tF",
+				"<leader>F",
 				function()
 					-- If autoformat is currently disabled globally,
 					-- then enable it globally, otherwise disable it globally
@@ -1208,19 +1209,6 @@ require("lazy").setup({
 		"Aasim-A/scrollEOF.nvim",
 		event = { "CursorMoved", "WinScrolled" },
 		opts = {},
-	},
-	{
-		"MeanderingProgrammer/render-markdown.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
-		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-		---@module 'render-markdown'
-		---@type render.md.UserConfig
-		opts = {
-			bullet = {
-				right_pad = 1,
-			},
-		},
 	},
 	{
 		"jiaoshijie/undotree",

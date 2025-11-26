@@ -9,7 +9,7 @@ alias gs "git status"
 alias gco "git checkout"
 alias gap "git add -p"
 alias gdf "git diff --"
-alias s5 "env {http,https}_proxy=socks5://127.0.0.1:1080"
+alias s5 "env {http,https}_proxy=socks5://127.0.0.1:8118"
 
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -37,12 +37,43 @@ function y
     rm -f -- "$tmp"
 end
 
-### For Expo
+function gitlogue-menu
+    set choice (printf "Random commits\nSpecific commit\nBy author\nBy date range\nTheme selection" \
+        | fzf --prompt="gitlogue> " --height=40% --reverse)
+
+    switch "$choice"
+        case "Random commits"
+            gitlogue
+
+        case "Specific commit"
+            set commit (git log --oneline | fzf --prompt="Select commit> " | awk '{print $1}')
+            if test -n "$commit"
+                gitlogue --commit "$commit"
+            end
+
+        case "By author"
+            set author (git log --format='%an' | sort -u | fzf --prompt="Select author> ")
+            if test -n "$author"
+                gitlogue
+            end
+
+        case "Theme selection"
+            set theme (gitlogue theme list | tail -n +2 | sed 's/^  - //' | fzf --prompt="Select theme> ")
+            if test -n "$theme"
+                gitlogue --theme "$theme"
+            end
+    end
+end
+
+# for Expo
 set -Ux ANDROID_HOME "/opt/android-sdk/"
 set -Ux ANDROID_SDK_ROOT "/opt/android-sdk/"
 
-### npm
+# npm
 set -Ux npm_config_prefix "$HOME/.local"
+
+# for postgresql
+set -U fish_user_paths /usr/local/opt/postgresql@15/bin
 
 # For fcitx5
 set -Ux GTK_IM_MODULE fcitx
