@@ -1,8 +1,8 @@
+fish_vi_key_bindings
 ## Alias
 alias sd "nvim (find ~/Documents -type f | fzf)"
 alias pd "cd (find ~/Projects -type d | fzf)"
-alias y "yazi"
-alias v "nvim"
+alias v nvim
 
 ## git
 alias gs "git status"
@@ -18,21 +18,21 @@ set fish_greeting
 
 fish_config theme choose flexoki-dark
 # >>> Keybinds >>>
-function fish_user_key_bindings
-    bind \ck 'up-or-search'
-    bind \cj 'down-or-search'
-    bind \ch 'backward-word'
-    bind \cl 'forward-word'
-    ### Auto-suggestion
-    bind \cw accept-autosuggestion
-    bind \cd backward-kill-bigword
-end
+# function fish_user_key_bindings
+#     bind \ck up-or-search
+#     bind \cj down-or-search
+#     bind \ch backward-word
+#     bind \cl forward-word
+#     ### Auto-suggestion
+#     bind \cw accept-autosuggestion
+#     bind \cd backward-kill-bigword
+# end
 
 function y
     set tmp (mktemp -t "yazi-cwd.XXXXXX")
     yazi $argv --cwd-file="$tmp"
     if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-	    builtin cd -- "$cwd"
+        builtin cd -- "$cwd"
     end
     rm -f -- "$tmp"
 end
@@ -65,47 +65,65 @@ function gitlogue-menu
     end
 end
 
-# for Expo
-set -Ux ANDROID_HOME "/opt/android-sdk/"
-set -Ux ANDROID_SDK_ROOT "/opt/android-sdk/"
+# Expo
+set -x ANDROID_HOME /opt/android-sdk/
+set -x ANDROID_SDK_ROOT /opt/android-sdk/
+
+# React Native
+set -x HOME /Users/lawrence
 
 # npm
-set -Ux npm_config_prefix "$HOME/.local"
+set -x npm_config_prefix "$HOME/.local"
 
-# for postgresql
-set -U fish_user_paths /usr/local/opt/postgresql@15/bin
+# postgresql
+set fish_user_paths /usr/local/opt/postgresql@18/bin
 
-# For fcitx5
-set -Ux GTK_IM_MODULE fcitx
-set -Ux XMODIFIERS @im=fcitx
-set -Ux QT_IM_MODULE fcitx
-set -Ux SDL_IM_MODULE fcitx
-# set -gx GLFW_IM_MODULE ibus
+# fcitx5
+# set -Ux GTK_IM_MODULE fcitx
+# set -Ux XMODIFIERS @im=fcitx
+# set -Ux QT_IM_MODULE fcitx
+# set -Ux SDL_IM_MODULE fcitx
 
-# For Manpage color
-set -Ux PAGER less
-set -Ux EDITOR nvim
-set -Ux VISUAL nvim
-
-# set -gx http_proxy socks5://127.0.0.1:1080
-# set -gx https_proxy $http_proxy
-# set -gx ftp_proxy $http_proxy
-# set -gx rsync_proxy $http_proxy
-# set -gx no_proxy "localhost,127.0.0.1,localaddress,.localdomain.com"
+# manpage color
+set -x PAGER less
+set -x EDITOR nvim
+set -x VISUAL nvim
 
 # pnpm
-set -Ux PNPM_HOME "/home/Lawrence/.local/share/pnpm"
+set -x PNPM_HOME "/home/Lawrence/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
-  set -Ux PATH "$PNPM_HOME" $PATH
+    set -x PATH "$PNPM_HOME" $PATH
 end
-# pnpm end
 
 # Elixir
-# enable history
+## enable history
 set -x ERL_AFLAGS "-kernel shell_history enabled"
-### Weird mix_env
+## Weird mix_env
 set -x MIX_ENV dev
+
+# Ruby
+fish_add_path /usr/local/opt/ruby/bin
+## for local gem
+set GEM_HOME $HOME/.gem
+fish_add_path $GEM_HOME/bin
+## for compiler to find ruby
+set -gx LDFLAGS -L/usr/local/opt/ruby/lib
+set -gx CPPFLAGS -I/usr/local/opt/ruby/include
+## for config
+set -gx PKG_CONFIG_PATH /usr/local/opt/ruby/lib/pkgconfig
+## for cocoapods, can check from `gem which cocoapods`, not at the cocoapods/bin tho
+# (FUCKING COCOAPODS YOU POS #$@##@#)
+fish_add_path /Users/lawrence/.gem/ruby/3.4.0/bin
+
+# Java
+# set -x JAVA_17_HOME /usr/local/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home
+# set -x JAVA_21_HOME /usr/local/Cellar/openjdk@21/21.0.9/libexec/openjdk.jdk/Contents/Home
+# Default Java 17
+# set -x JAVA_HOME $JAVA_17_HOME
+# set -x PATH $JAVA_HOME/bin $PATH
+
+# alias java17 "set -x JAVA_HOME $JAVA_17_HOME; echo JAVA_HOME switched to Java 17"
+# alias java21 "set -x JAVA_HOME $JAVA_21_HOME; echo JAVA_HOME switched to Java 21"
 
 # Tips:
 # If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
-# WARN: Don't do this `set PATH $PATH:/home/Lawrence/.local/bin`, it causes a massive slow

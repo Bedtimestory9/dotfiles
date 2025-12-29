@@ -55,6 +55,6 @@ source /usr/local/share/powerlevel10k/powerlevel10k.zsh-theme
 # Substring search
 source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 # Ruby MacOS
-chruby ruby-3.4.7
-source /usr/local/opt/chruby/share/chruby/chruby.sh
-source /usr/local/opt/chruby/share/chruby/auto.sh
+# chruby ruby-3.4.7
+# source /usr/local/opt/chruby/share/chruby/chruby.sh
+# source /usr/local/opt/chruby/share/chruby/auto.sh

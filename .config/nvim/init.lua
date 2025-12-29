@@ -79,6 +79,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.wrap = false
 vim.opt.termguicolors = true
+vim.lsp.enable("jdtls")
 vim.o.winborder = "rounded"
 -- vim.g.tex_flavor = "latex"
 -- Fixing border vanishing
@@ -616,10 +617,9 @@ require("lazy").setup({
 				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
 					return
 				end
-				local disable_filetypes = { c = false, cpp = false }
 				return {
-					timeout_ms = 500,
-					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+					timeout_ms = 2500,
+					lsp_fallback = true,
 				}
 			end,
 			formatters_by_ft = {
@@ -635,6 +635,7 @@ require("lazy").setup({
 		},
 		config = function(_, opts)
 			require("conform").setup(opts)
+			require("conform").format({ async = true, lsp_fallback = true })
 
 			vim.api.nvim_create_user_command("FormatDisable", function(args)
 				if args.bang then
@@ -777,9 +778,9 @@ require("lazy").setup({
 		--
 		-- "folke/tokyonight.nvim",
 		-- "kepano/flexoki-neovim",
-		-- "rebelot/kanagawa.nvim",
+		"rebelot/kanagawa.nvim",
 		-- "sainnhe/sonokai",
-		"ribru17/bamboo.nvim",
+		-- "ribru17/bamboo.nvim",
 		-- "yorik1984/newpaper.nvim",
 		-- "Bedtimestory9/flexoki-newpaper.nvim",
 		-- "cpplain/flexoki.nvim",
@@ -830,7 +831,7 @@ require("lazy").setup({
 			--     git_sign_bg = "#FFFBEF",
 			--   },
 			-- })
-			vim.cmd.colorscheme("bamboo")
+			vim.cmd.colorscheme("kanagawa")
 		end,
 		-- Load the colorscheme here.
 		-- Like many other themes, this one has different styles, and you could load
@@ -980,8 +981,7 @@ require("lazy").setup({
 		"folke/trouble.nvim",
 		opts = {
 			modes = {
-				preview_float = {
-					mode = "diagnostics",
+				diagnostics = {
 					preview = {
 						type = "float",
 						relative = "editor",
@@ -989,8 +989,35 @@ require("lazy").setup({
 						title = "Preview",
 						title_pos = "center",
 						position = { 0, -2 },
-						size = { width = 0.3, height = 0.3 },
+						size = { width = 0.5, height = 0.3 },
 						zindex = 200,
+					},
+				},
+				cascade = {
+					mode = "diagnostics",
+					filter = function(items)
+						local severity = vim.diagnostic.severity.HINT
+						for _, item in ipairs(items) do
+							severity = math.min(severity, item.severity)
+						end
+						return vim.tbl_filter(function(item)
+							return item.severity == severity
+						end, items)
+					end,
+				},
+				mydiags = {
+					mode = "diagnostics", -- inherit from diagnostics mode
+					filter = {
+						any = {
+							buf = 0, -- current buffer
+							{
+								severity = vim.diagnostic.severity.ERROR, -- errors only
+								-- limit to files in the current project
+								function(item)
+									return item.filename:find((vim.loop or vim.uv).cwd(), 1, true)
+								end,
+							},
+						},
 					},
 				},
 			},
@@ -999,7 +1026,7 @@ require("lazy").setup({
 		keys = {
 			{
 				"<leader>q",
-				"<cmd>Trouble diagnostics toggle<cr>",
+				"<cmd>Trouble diagnostics toggle focus=true<cr>",
 				desc = "Diagnostics (Trouble)",
 			},
 			{
@@ -1220,6 +1247,9 @@ require("lazy").setup({
 		keys = { -- load the plugin only when using it's keybinding:
 			{ "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
 		},
+	},
+	{
+		"sindrets/diffview.nvim",
 	},
 })
 
