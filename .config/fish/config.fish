@@ -7,8 +7,9 @@ alias v nvim
 ## git
 alias gs "git status"
 alias gco "git checkout"
+alias gw "git switch"
 alias gap "git add -p"
-alias gdf "git diff --"
+## proxy
 alias s5 "env {http,https}_proxy=socks5://127.0.0.1:8118"
 
 # Dotfiles manipulation
