@@ -17,7 +17,7 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 set fish_greeting
 
-fish_config theme choose flexoki-dark
+fish_config theme choose Lava
 # >>> Keybinds >>>
 # function fish_user_key_bindings
 #     bind \ck up-or-search
@@ -70,11 +70,13 @@ end
 set -x ANDROID_HOME /opt/android-sdk/
 set -x ANDROID_SDK_ROOT /opt/android-sdk/
 
-# React Native
-set -x HOME /Users/lawrence
-
 # npm
-set -x npm_config_prefix "$HOME/.local"
+set -x npm_config_prefix $HOME/.local
+fish_add_path $HOME/.local/bin
+
+# pnpm
+set -x PNPM_HOME "$HOME/.local/share/pnpm/"
+fish_add_path PNPM_HOME
 
 # postgresql
 set fish_user_paths /usr/local/opt/postgresql@18/bin
@@ -89,12 +91,6 @@ set fish_user_paths /usr/local/opt/postgresql@18/bin
 set -x PAGER less
 set -x EDITOR nvim
 set -x VISUAL nvim
-
-# pnpm
-set -x PNPM_HOME "/home/Lawrence/.local/share/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-    set -x PATH "$PNPM_HOME" $PATH
-end
 
 # Elixir
 ## enable history
@@ -128,3 +124,7 @@ fish_add_path /Users/lawrence/.gem/ruby/3.4.0/bin
 
 # Tips:
 # If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
