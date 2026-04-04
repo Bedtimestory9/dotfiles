@@ -18,16 +18,6 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 set fish_greeting
 
 fish_config theme choose Lava
-# >>> Keybinds >>>
-# function fish_user_key_bindings
-#     bind \ck up-or-search
-#     bind \cj down-or-search
-#     bind \ch backward-word
-#     bind \cl forward-word
-#     ### Auto-suggestion
-#     bind \cw accept-autosuggestion
-#     bind \cd backward-kill-bigword
-# end
 
 function y
     set tmp (mktemp -t "yazi-cwd.XXXXXX")
@@ -36,34 +26,6 @@ function y
         builtin cd -- "$cwd"
     end
     rm -f -- "$tmp"
-end
-
-function gitlogue-menu
-    set choice (printf "Random commits\nSpecific commit\nBy author\nBy date range\nTheme selection" \
-        | fzf --prompt="gitlogue> " --height=40% --reverse)
-
-    switch "$choice"
-        case "Random commits"
-            gitlogue
-
-        case "Specific commit"
-            set commit (git log --oneline | fzf --prompt="Select commit> " | awk '{print $1}')
-            if test -n "$commit"
-                gitlogue --commit "$commit"
-            end
-
-        case "By author"
-            set author (git log --format='%an' | sort -u | fzf --prompt="Select author> ")
-            if test -n "$author"
-                gitlogue
-            end
-
-        case "Theme selection"
-            set theme (gitlogue theme list | tail -n +2 | sed 's/^  - //' | fzf --prompt="Select theme> ")
-            if test -n "$theme"
-                gitlogue --theme "$theme"
-            end
-    end
 end
 
 # Expo
@@ -75,17 +37,21 @@ set -x npm_config_prefix $HOME/.local
 fish_add_path $HOME/.local/bin
 
 # pnpm
-set -x PNPM_HOME "$HOME/.local/share/pnpm/"
-fish_add_path PNPM_HOME
+set -x PNPM_HOME $HOME/.local/share/pnpm/
+fish_add_path $PNPM_HOME
 
 # postgresql
-set fish_user_paths /usr/local/opt/postgresql@18/bin
+fish_add_path /usr/local/opt/postgresql@18/bin
 
 # fcitx5
 # set -Ux GTK_IM_MODULE fcitx
 # set -Ux XMODIFIERS @im=fcitx
 # set -Ux QT_IM_MODULE fcitx
 # set -Ux SDL_IM_MODULE fcitx
+
+# Go
+set -x GOPATH $HOME/.go
+fish_add_path $GOPATH/bin
 
 # manpage color
 set -x PAGER less

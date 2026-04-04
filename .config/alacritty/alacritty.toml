@@ -3,7 +3,7 @@ shell = { program = "/usr/local/bin/fish", args = ["-l"] }
 
 [general]
 import = [
-    "~/.config/alacritty/themes/themes/flexoki.toml"
+    "~/.config/alacritty/themes/themes/monokai.toml"
 ]
 
 [window]
