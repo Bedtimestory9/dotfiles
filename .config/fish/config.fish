@@ -1,24 +1,25 @@
+set fish_greeting
 fish_vi_key_bindings
+
 ## Alias
-alias sd "nvim (find ~/Documents -type f | fzf)"
-alias pd "cd (find ~/Projects -type d | fzf)"
+alias pd 'cd (find ~/Projects -type d -maxdepth 2 | fzf)'
 alias v nvim
 
 ## git
-alias gs "git status"
+alias gs "git status -sb"
 alias gco "git checkout"
 alias gw "git switch"
 alias gap "git add -p"
+
 ## proxy
-alias s5 "env {http,https}_proxy=socks5://127.0.0.1:8118"
+alias s5='env http_proxy=socks5h://127.0.0.1:10800 https_proxy=socks5h://127.0.0.1:10800'
 
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-set fish_greeting
-
 fish_config theme choose Lava
 
+## Yazi
 function y
     set tmp (mktemp -t "yazi-cwd.XXXXXX")
     yazi $argv --cwd-file="$tmp"
@@ -27,6 +28,9 @@ function y
     end
     rm -f -- "$tmp"
 end
+
+fish_add_path /usr/local/opt/trash-cli/bin
+##
 
 # Expo
 set -x ANDROID_HOME /opt/android-sdk/
@@ -49,7 +53,7 @@ fish_add_path /usr/local/opt/postgresql@18/bin
 # set -Ux QT_IM_MODULE fcitx
 # set -Ux SDL_IM_MODULE fcitx
 
-# Go
+## Golang
 set -x GOPATH $HOME/.go
 fish_add_path $GOPATH/bin
 
@@ -65,18 +69,25 @@ set -x ERL_AFLAGS "-kernel shell_history enabled"
 set -x MIX_ENV dev
 
 # Ruby
-fish_add_path /usr/local/opt/ruby/bin
 ## for local gem
 set GEM_HOME $HOME/.gem
 fish_add_path $GEM_HOME/bin
 ## for compiler to find ruby
-set -gx LDFLAGS -L/usr/local/opt/ruby/lib
-set -gx CPPFLAGS -I/usr/local/opt/ruby/include
+set -x LDFLAGS -L/usr/local/opt/ruby/lib
+set -x CPPFLAGS -I/usr/local/opt/ruby/include
 ## for config
-set -gx PKG_CONFIG_PATH /usr/local/opt/ruby/lib/pkgconfig
+set -x PKG_CONFIG_PATH /usr/local/opt/ruby/lib/pkgconfig
 ## for cocoapods, can check from `gem which cocoapods`, not at the cocoapods/bin tho
 # (FUCKING COCOAPODS YOU POS #$@##@#)
-fish_add_path /Users/lawrence/.gem/ruby/3.4.0/bin
+fish_add_path $GEM_HOME/ruby/3.4.0/bin
+
+## Clang
+fish_add_path /usr/local/opt/llvm/bin
+# For compilers to find llvm you may need to set:
+set -gx LDFLAGS -L/usr/local/opt/llvm/lib
+set -gx CPPFLAGS -I/usr/local/opt/llvm/include
+#For cmake to find llvm you may need to set:
+set -gx CMAKE_PREFIX_PATH /usr/local/opt/llvm
 
 # Java
 # set -x JAVA_17_HOME /usr/local/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home

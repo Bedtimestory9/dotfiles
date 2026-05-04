@@ -15,6 +15,10 @@ blur = true
 normal = { family = "RecMonoLinear Nerd Font"}
 size = 18
 
+[cursor]
+style = { blinking = "Always" }
+blink_timeout = 0
+
 # Fix Ctrl + i
 [keyboard]
 bindings = [ { key = 'I', mods = 'Control', chars =  "\u001b[105;5u" } ]

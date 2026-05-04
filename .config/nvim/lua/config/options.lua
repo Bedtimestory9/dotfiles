@@ -105,7 +105,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- Jump to the definition of the word under your cursor.
 		--  This is where a variable was first declared, or where a function is defined, etc.
 		--  To jump back, press <C-t>.
-		map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+		map("gD", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 
 		-- Find references for the word under your cursor.
 		map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
@@ -136,7 +136,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
 
 		-- For example, in C this would take you to the header.
-		map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+		-- map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
 		-- The following two autocommands are used to highlight references of the
 		-- word under your cursor when your cursor rests there for a little while.
@@ -179,5 +179,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
 			end, "[T]oggle Inlay [H]ints")
 		end
+	end,
+})
+
+vim.keymap.set("n", "gd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
+vim.keymap.set("n", "gq", "<cmd>lua require('goto-preview').close_all_win()<CR>", { noremap = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "html",
+	callback = function()
+		vim.lsp.start({
+			name = "go-template-lsp",
+			cmd = { "go-template-lsp" },
+			root_dir = vim.fs.dirname(vim.fs.find({ "go.mod" }, { upward = true })[1]),
+		})
 	end,
 })

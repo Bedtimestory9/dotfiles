@@ -39,7 +39,6 @@ return {
 		"mikavilpas/yazi.nvim",
 		event = "VeryLazy",
 		keys = {
-			-- 👇 in this section, choose your own keymappings!
 			{
 				"<leader>-",
 				mode = { "n", "v" },
@@ -106,5 +105,11 @@ return {
 				})
 			end, { desc = "Find all files" })
 		end,
+	},
+	{
+		"rmagatti/goto-preview",
+		dependencies = { "rmagatti/logger.nvim" },
+		event = "BufEnter",
+		config = true, -- necessary as per https://github.com/rmagatti/goto-preview/issues/88
 	},
 }

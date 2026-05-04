@@ -1,6 +1,8 @@
 return {
 	{
 		"windwp/nvim-ts-autotag",
+		lazy = false,
+		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("nvim-ts-autotag").setup({
 				opts = {
@@ -9,14 +11,25 @@ return {
 					enable_rename = true, -- Auto rename pairs of tags
 					enable_close_on_slash = false, -- Auto close on trailing </
 				},
+				filetype = {
+					"html",
+					"xml",
+					"javascript",
+					"typescript",
+					"javascriptreact",
+					"typescriptreact",
+					"vue",
+					"svelte",
+					"astro",
+				},
 				-- Also override individual filetype configs, these take priority.
 				-- Empty by default, useful if one of the "opts" global settings
 				-- doesn't work well in a specific filetype
-				per_filetype = {
-					["html"] = {
-						enable_close = false,
-					},
-				},
+				-- per_filetype = {
+				-- 	["html"] = {
+				-- 		enable_close = false,
+				-- 	},
+				-- },
 			})
 		end,
 	},
@@ -54,7 +67,6 @@ return {
 				desc = "Format buffer",
 			},
 		},
-		-- This will provide type hinting with LuaLS
 		---@module "conform"
 		---@type conform.setupOpts
 		opts = {
@@ -62,7 +74,10 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				python = { "isort", "black" },
-				javascript = { "prettierd", "prettier", stop_after_first = true },
+				javascript = { "prettierd", stop_after_first = true },
+				typescript = { "prettierd", stop_after_first = true },
+				json = { "prettierd", stop_after_first = true },
+				jsonc = { "prettierd", stop_after_first = true },
 				elixir = { "mix" },
 				eelixir = { "mix" },
 				heex = { "mix" },
@@ -91,7 +106,6 @@ return {
 		lazy = false,
 		build = ":TSUpdate",
 		opts = {
-
 			ensure_installed = { "elixir" },
 			highlight = {
 				enable = true,
