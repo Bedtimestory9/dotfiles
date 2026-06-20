@@ -1,14 +1,11 @@
 return {
 	{
-		"ribru17/bamboo.nvim",
+		"cpplain/flexoki.nvim",
 		lazy = false,
 		priority = 1000,
 		init = function()
-			require("bamboo").setup({
-				style = "multiplex",
-				dim_inactive = true,
-			})
-			vim.cmd("colorscheme bamboo")
+			require("flexoki").setup({})
+			vim.cmd("colorscheme flexoki")
 		end,
 	},
 	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -25,9 +22,6 @@ return {
 	},
 	{
 		"j-hui/fidget.nvim",
-		opts = {
-			-- options
-		},
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",

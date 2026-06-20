@@ -81,6 +81,9 @@ set -x PKG_CONFIG_PATH /usr/local/opt/ruby/lib/pkgconfig
 # (FUCKING COCOAPODS YOU POS #$@##@#)
 fish_add_path $GEM_HOME/ruby/3.4.0/bin
 
+# Rust
+fish_add_path $HOME/.cargo/bin/
+
 ## Clang
 fish_add_path /usr/local/opt/llvm/bin
 # For compilers to find llvm you may need to set:
@@ -89,7 +92,9 @@ set -gx CPPFLAGS -I/usr/local/opt/llvm/include
 #For cmake to find llvm you may need to set:
 set -gx CMAKE_PREFIX_PATH /usr/local/opt/llvm
 
-# Java
+## Java
+
+# SDKMAN!
 # set -x JAVA_17_HOME /usr/local/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home
 # set -x JAVA_21_HOME /usr/local/Cellar/openjdk@21/21.0.9/libexec/openjdk.jdk/Contents/Home
 # Default Java 17

@@ -14,7 +14,6 @@ return {
 		"sindrets/diffview.nvim",
 		config = function()
 			-- Lua
-			local actions = require("diffview.actions")
 			require("diffview").setup({
 				diff_binaries = false, -- Show diffs for binaries
 				enhanced_diff_hl = false, -- See |diffview-config-enhanced_diff_hl|

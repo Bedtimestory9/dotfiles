@@ -54,17 +54,11 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.wrap = false
 vim.opt.termguicolors = true
+-- Visuals
+vim.diagnostic.config({ virtual_text = true })
+vim.o.background = "dark"
 vim.o.winborder = "rounded"
 
--- Visuals
-if vim.g.have_nerd_font then
-	local signs = { ERROR = "", WARN = "", INFO = "", HINT = "" }
-	local diagnostic_signs = {}
-	for type, icon in pairs(signs) do
-		diagnostic_signs[vim.diagnostic.severity[type]] = icon
-	end
-	vim.diagnostic.config({ signs = { text = diagnostic_signs }, virtual_text = true })
-end
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -83,11 +77,9 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Make help window vertically right
 vim.api.nvim_create_autocmd("BufWinEnter", {
 	group = vim.api.nvim_create_augroup("help_window_right", {}),
-	pattern = { "*.txt" },
+	pattern = { "*.txt", "*.md" },
 	callback = function()
-		if vim.o.filetype == "help" then
-			vim.cmd.wincmd("L")
-		end
+		vim.cmd.wincmd("L")
 	end,
 })
 
@@ -112,7 +104,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		-- Jump to the implementation of the word under your cursor.
 		--  Useful when your language has ways of declaring types without an actual implementation.
-		map("gi", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+		map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
 
 		-- Jump to the type of the word under your cursor.
 		--  Useful when you're not sure what type a variable is and you want to see
@@ -184,14 +176,3 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.keymap.set("n", "gd", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", { noremap = true })
 vim.keymap.set("n", "gq", "<cmd>lua require('goto-preview').close_all_win()<CR>", { noremap = true })
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "html",
-	callback = function()
-		vim.lsp.start({
-			name = "go-template-lsp",
-			cmd = { "go-template-lsp" },
-			root_dir = vim.fs.dirname(vim.fs.find({ "go.mod" }, { upward = true })[1]),
-		})
-	end,
-})

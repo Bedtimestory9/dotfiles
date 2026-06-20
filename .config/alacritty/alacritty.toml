@@ -10,10 +10,11 @@ import = [
 opacity = 0.85
 decorations = "Buttonless"
 blur = true
+padding = {x = 15, y = 15}
 
 [font]
-normal = { family = "RecMonoLinear Nerd Font"}
-size = 18
+normal = { family = "IosevkaTerm Nerd Font", style = "Regular"}
+size = 22
 
 [cursor]
 style = { blinking = "Always" }

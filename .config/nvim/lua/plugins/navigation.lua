@@ -57,6 +57,8 @@ return {
 			open_for_directories = false,
 			keymaps = {
 				show_help = "<f1>",
+				-- to prevent tab from going to subdirectory
+				cycle_open_buffers = "^",
 			},
 		},
 	},

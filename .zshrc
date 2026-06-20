@@ -58,3 +58,8 @@ source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring
 # chruby ruby-3.4.7
 # source /usr/local/opt/chruby/share/chruby/chruby.sh
 # source /usr/local/opt/chruby/share/chruby/auto.sh
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
