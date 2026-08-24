@@ -155,7 +155,7 @@ return {
 				draw = {
 					delay = 100,
 				},
-				symbol = "│",
+				symbol = "|",
 			})
 		end,
 	},

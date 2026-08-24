@@ -1,24 +1,13 @@
 return {
 	{
-		"cpplain/flexoki.nvim",
+		"kepano/flexoki-neovim",
+		name = "flexoki",
 		lazy = false,
 		priority = 1000,
 		init = function()
 			require("flexoki").setup({})
-			vim.cmd("colorscheme flexoki")
+			vim.cmd("colorscheme flexoki-light")
 		end,
-	},
-	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
-		"lewis6991/gitsigns.nvim",
-		opts = {
-			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
-			},
-		},
 	},
 	{
 		"j-hui/fidget.nvim",

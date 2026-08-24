@@ -12,12 +12,17 @@ alias gw "git switch"
 alias gap "git add -p"
 
 ## proxy
-alias s5='env http_proxy=socks5h://127.0.0.1:10800 https_proxy=socks5h://127.0.0.1:10800'
+## NOTE: -g is mandatory for this to work in alias
+function s5
+    set -gx https_proxy socks5h://127.0.0.1:8118
+    set -gx http_proxy socks5h://127.0.0.1:8118
+    echo "Terminal proxy has been set!"
+end
 
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-fish_config theme choose Lava
+fish_config theme choose tomorrow
 
 ## Yazi
 function y
