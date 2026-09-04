@@ -35,12 +35,17 @@ return {
 	cmd = "Trouble",
 	keys = {
 		{
-			"<leader>T",
+			"<leader>v",
+			"<cmd>lua vim.diagnostic.open_float()<cr>",
+			desc = "Float virtual text",
+		},
+		{
+			"<leader>t",
 			"<cmd>Trouble diagnostics toggle focus=true<cr>",
 			desc = "Diagnostics (Trouble)",
 		},
 		{
-			"<leader>t",
+			"<leader>T",
 			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
 			desc = "Buffer Diagnostics (Trouble)",
 		},

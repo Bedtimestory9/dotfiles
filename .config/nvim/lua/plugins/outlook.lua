@@ -1,3 +1,4 @@
+vim.o.background = "light"
 return {
 	{
 		"kepano/flexoki-neovim",
@@ -6,7 +7,7 @@ return {
 		priority = 1000,
 		init = function()
 			require("flexoki").setup({})
-			vim.cmd("colorscheme flexoki-light")
+			vim.cmd("colorscheme flexoki")
 		end,
 	},
 	{

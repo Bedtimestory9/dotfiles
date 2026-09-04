@@ -56,7 +56,6 @@ vim.opt.wrap = false
 vim.opt.termguicolors = true
 -- Visuals
 vim.diagnostic.config({ virtual_text = true })
-vim.o.background = "dark"
 vim.o.winborder = "rounded"
 
 vim.api.nvim_create_autocmd("TextYankPost", {
