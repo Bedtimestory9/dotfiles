@@ -14,8 +14,8 @@ alias gap "git add -p"
 ## proxy
 ## NOTE: -g is mandatory for this to work in alias
 function s5
-    set -gx https_proxy socks5h://127.0.0.1:8118
-    set -gx http_proxy socks5h://127.0.0.1:8118
+    set -gx https_proxy socks5h://127.0.0.1:10800
+    set -gx http_proxy socks5h://127.0.0.1:10800
     echo "Terminal proxy has been set!"
 end
 
@@ -99,6 +99,9 @@ set -gx CMAKE_PREFIX_PATH /usr/local/opt/llvm
 
 ## Java
 
+## Pytho
+fish_add_path /opt/venv/bin
+
 # SDKMAN!
 # set -x JAVA_17_HOME /usr/local/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home
 # set -x JAVA_21_HOME /usr/local/Cellar/openjdk@21/21.0.9/libexec/openjdk.jdk/Contents/Home
@@ -109,9 +112,9 @@ set -gx CMAKE_PREFIX_PATH /usr/local/opt/llvm
 # alias java17 "set -x JAVA_HOME $JAVA_17_HOME; echo JAVA_HOME switched to Java 17"
 # alias java21 "set -x JAVA_HOME $JAVA_21_HOME; echo JAVA_HOME switched to Java 21"
 
-# Tips:
-# If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
-
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# Tips:
+# If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style

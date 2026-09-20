@@ -1,13 +1,11 @@
 vim.o.background = "light"
 return {
 	{
-		"kepano/flexoki-neovim",
-		name = "flexoki",
+		"rebelot/kanagawa.nvim",
 		lazy = false,
 		priority = 1000,
 		init = function()
-			require("flexoki").setup({})
-			vim.cmd("colorscheme flexoki")
+			vim.cmd("colorscheme kanagawa")
 		end,
 	},
 	{

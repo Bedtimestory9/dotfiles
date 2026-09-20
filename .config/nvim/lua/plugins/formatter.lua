@@ -81,6 +81,7 @@ return {
 				eelixir = { "mix" },
 				heex = { "mix" },
 				surface = { "mix" },
+				xml = { "tidyf" },
 			},
 			-- Set default options
 			default_format_opts = {
@@ -92,6 +93,11 @@ return {
 			formatters = {
 				shfmt = {
 					append_args = { "-i", "2" },
+				},
+				-- NOTE: using tidy = { append_args = { --args }} would fail to work
+				["tidyf"] = {
+					command = "tidy",
+					args = { "-xml", "-quiet" },
 				},
 			},
 		},
