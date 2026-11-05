@@ -7,6 +7,20 @@ return {
 		init = function()
 			vim.cmd("colorscheme kanagawa")
 		end,
+		config = function()
+			require("kanagawa").setup({
+				-- Remove line number bg color
+				colors = {
+					theme = {
+						all = {
+							ui = {
+								bg_gutter = "none",
+							},
+						},
+					},
+				},
+			})
+		end,
 	},
 	{
 		"j-hui/fidget.nvim",
@@ -75,9 +89,9 @@ return {
 							shorting_target = 40, -- Shortens path to leave 40 spaces in the window
 							-- for other components. (terrible name, any suggestions?)
 							symbols = {
-								modified = "[M]", -- Text to show when the file is modified.
-								readonly = "[R]", -- Text to show when the file is non-modifiable or readonly.
-								unnamed = "[No File]", -- Text to show for unnamed buffers.
+								modified = "[Modified]", -- Text to show when the file is modified.
+								readonly = "[Readonly]", -- Text to show when the file is non-modifiable or readonly.
+								unnamed = "[Empty]", -- Text to show for unnamed buffers.
 								newfile = "[New]", -- Text to show for newly created file before first write
 							},
 						},

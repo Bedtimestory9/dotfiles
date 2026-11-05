@@ -40,12 +40,12 @@ return {
 			desc = "Float virtual text",
 		},
 		{
-			"<leader>t",
+			"<leader>T",
 			"<cmd>Trouble diagnostics toggle focus=true<cr>",
 			desc = "Diagnostics (Trouble)",
 		},
 		{
-			"<leader>T",
+			"<leader>t",
 			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
 			desc = "Buffer Diagnostics (Trouble)",
 		},

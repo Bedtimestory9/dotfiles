@@ -77,6 +77,7 @@ return {
 				typescript = { "prettierd", stop_after_first = true },
 				json = { "prettierd", stop_after_first = true },
 				jsonc = { "prettierd", stop_after_first = true },
+				css = { "prettierd", stop_after_first = true },
 				elixir = { "mix" },
 				eelixir = { "mix" },
 				heex = { "mix" },
@@ -94,7 +95,8 @@ return {
 				shfmt = {
 					append_args = { "-i", "2" },
 				},
-				-- NOTE: using tidy = { append_args = { --args }} would fail to work
+				-- WARN: using tidy = { append_args = { --args }} would fail to work
+				-- NOTE: config is at .tidyrc to ensure indent, there's probably an argument for that
 				["tidyf"] = {
 					command = "tidy",
 					args = { "-xml", "-quiet" },
@@ -156,12 +158,6 @@ return {
 			require("mini.surround").setup()
 			-- require("mini.icons").setup()
 			require("mini.git").setup()
-			require("mini.indentscope").setup({
-				draw = {
-					delay = 100,
-				},
-				symbol = "|",
-			})
 		end,
 	},
 }

@@ -5,7 +5,7 @@ fish_vi_key_bindings
 alias pd 'cd (find ~/Projects -type d -maxdepth 2 | fzf)'
 alias v nvim
 
-## git
+# git 
 alias gs "git status -sb"
 alias gco "git checkout"
 alias gw "git switch"
@@ -37,9 +37,8 @@ end
 fish_add_path /usr/local/opt/trash-cli/bin
 ##
 
-# Expo
-set -x ANDROID_HOME /opt/android-sdk/
-set -x ANDROID_SDK_ROOT /opt/android-sdk/
+# Android
+set -x ANDROID_HOME $HOME/Library/Android/sdk
 
 # npm
 set -x npm_config_prefix $HOME/.local

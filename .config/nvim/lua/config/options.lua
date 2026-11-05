@@ -18,12 +18,12 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
--- No wrap
-vim.keymap.set("n", "<C-w>", "<cmd>set wrap!<cr>", { desc = "[W]rap text" })
+-- wrap
+vim.keymap.set("n", "<leader>w", "<cmd>set wrap! | set linebreak<cr>", { desc = "[W]rap text for word" })
 -- DiffviewOpen/Close
-vim.keymap.set("n", "<leader>df", "<cmd>DiffviewOpen<cr>", { desc = "Open Diffview" })
+vim.keymap.set("n", "<leader>do", "<cmd>DiffviewOpen<cr>", { desc = "Open Diffview" })
 vim.keymap.set("n", "<leader>dc", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" })
-vim.keymap.set("n", "<leader>dr", "<cmd>DiffviewRefresh<cr>", { desc = "Refresh Diffview" })
+vim.keymap.set("n", "<leader>df", "<cmd>DiffviewFileHistory<cr>", { desc = "Diffview FileHistory" })
 
 vim.opt.list = true
 vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
@@ -54,6 +54,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.wrap = false
 vim.opt.termguicolors = true
+vim.wo.signcolumn = "yes"
 -- Visuals
 vim.diagnostic.config({ virtual_text = true })
 vim.o.winborder = "rounded"
