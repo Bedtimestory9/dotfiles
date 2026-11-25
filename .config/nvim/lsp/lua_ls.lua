@@ -33,6 +33,7 @@ return {
 					-- here.
 					-- '${3rd}/luv/library',
 					-- '${3rd}/busted/library',
+					"/usr/share/hypr/stubs/",
 				},
 				-- Or pull in all of 'runtimepath'.
 				-- NOTE: this is a lot slower and will cause issues when working on

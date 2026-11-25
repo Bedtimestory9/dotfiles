@@ -1,5 +1,5 @@
 [terminal]
-shell = { program = "/usr/local/bin/fish", args = ["-l"] }
+shell = { program = "/usr/bin/fish", args = ["-l"] }
 
 [general]
 import = [
@@ -8,13 +8,11 @@ import = [
 
 [window]
 opacity = 0.65
-decorations = "Buttonless"
 blur = true
-padding = {x = 15, y = 15}
 
 [font]
-normal = { family = "IosevkaTerm Nerd Font", style = "Regular"}
-size = 28
+normal = { family = "Iosevka Nerd Font", style = "Regular"}
+size = 14
 
 [cursor]
 style = { blinking = "Always" }

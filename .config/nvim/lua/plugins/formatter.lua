@@ -1,39 +1,5 @@
 return {
 	{
-		"windwp/nvim-ts-autotag",
-		lazy = false,
-		dependencies = "nvim-treesitter/nvim-treesitter",
-		config = function()
-			require("nvim-ts-autotag").setup({
-				opts = {
-					-- Defaults
-					enable_close = true, -- Auto close tags
-					enable_rename = true, -- Auto rename pairs of tags
-					enable_close_on_slash = false, -- Auto close on trailing </
-				},
-				filetype = {
-					"html",
-					"xml",
-					"javascript",
-					"typescript",
-					"javascriptreact",
-					"typescriptreact",
-					"vue",
-					"svelte",
-					"astro",
-				},
-				-- Also override individual filetype configs, these take priority.
-				-- Empty by default, useful if one of the "opts" global settings
-				-- doesn't work well in a specific filetype
-				-- per_filetype = {
-				-- 	["html"] = {
-				-- 		enable_close = false,
-				-- 	},
-				-- },
-			})
-		end,
-	},
-	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		config = true,
@@ -83,6 +49,7 @@ return {
 				heex = { "mix" },
 				surface = { "mix" },
 				xml = { "tidyf" },
+				html = { "prettierd" },
 			},
 			-- Set default options
 			default_format_opts = {
@@ -112,19 +79,35 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		lazy = false,
 		build = ":TSUpdate",
-		opts = {
-			ensure_installed = { "elixir" },
-			highlight = {
-				enable = true,
-			},
-		},
-		--WARN: Without this line, Elixir will not highlight
 		config = function()
+			-- import nvim-treesitter plugin
+			--WARN: Without this line, Elixir will not highlight
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function(args)
 					local ft = args.match
 					pcall(vim.treesitter.start, 0, ft)
 				end,
+			})
+		end,
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		config = function()
+			require("nvim-ts-autotag").setup({
+				opts = {
+					-- Defaults
+					enable_close = true, -- Auto close tags
+					enable_rename = true, -- Auto rename pairs of tags
+					enable_close_on_slash = false, -- Auto close on trailing </
+				},
+				-- Also override individual filetype configs, these take priority.
+				-- Empty by default, useful if one of the "opts" global settings
+				-- doesn't work well in a specific filetype
+				per_filetype = {
+					["html"] = {
+						enable_close = false,
+					},
+				},
 			})
 		end,
 	},

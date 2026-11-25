@@ -31,21 +31,21 @@ vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 12
 -- Treesitter-context
-vim.keymap.set("n", "[c", function()
-	require("treesitter-context").go_to_context(vim.v.count1)
-end, { silent = true })
+-- vim.keymap.set("n", "[c", function()
+-- 	require("treesitter-context").go_to_context(vim.v.count1)
+-- end, { silent = true })
 
 vim.keymap.set("n", "<Tab>", ">>")
 vim.keymap.set("n", "<S-Tab>", "<<")
 vim.keymap.set("v", "<Tab>", ">>")
 vim.keymap.set("v", "<S-Tab>", "<<")
--- Distinguish <Tab> from <C-i> in normal mode
-vim.keymap.set("n", "<C-i>", "<C-i>")
--- See `:help wincmd` for a list of all window commands
 vim.keymap.set("n", "<leader>h", "<cmd>wincmd h<cr>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<leader>l", "<cmd>wincmd l<cr>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<leader>j", "<cmd>wincmd j<cr>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<leader>k", "<cmd>wincmd k<cr>", { desc = "Move focus to the upper window" })
+-- From the primeagen
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 
 -- My own opts
 vim.opt.smartindent = true
@@ -55,6 +55,18 @@ vim.opt.shiftwidth = 4
 vim.opt.wrap = false
 vim.opt.termguicolors = true
 vim.wo.signcolumn = "yes"
+vim.keymap.set("n", "<leader>p", '<cmd>wincmd "0p<cr>', { desc = "Normal paste" })
+
+-- kitty fix
+--
+-- Distinguish <Tab> from <C-i> in normal mode
+vim.keymap.set("n", "<C-i>", "<C-i>")
+
+if vim.env.TERM == "xterm-kitty" then
+	vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]])
+	vim.cmd([[autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]])
+end
+--
 -- Visuals
 vim.diagnostic.config({ virtual_text = true })
 vim.o.winborder = "rounded"

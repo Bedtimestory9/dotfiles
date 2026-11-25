@@ -2,7 +2,7 @@ set fish_greeting
 fish_vi_key_bindings
 
 ## Alias
-alias pd 'cd (find ~/Projects -type d -maxdepth 2 | fzf)'
+alias pd 'cd (find ~/Projects -maxdepth 2 -type d | fzf)'
 alias v nvim
 
 # git 
@@ -16,13 +16,15 @@ alias gap "git add -p"
 function s5
     set -gx https_proxy socks5h://127.0.0.1:10800
     set -gx http_proxy socks5h://127.0.0.1:10800
+    set -gx ftp_proxy socks5h://127.0.0.1:10800
     echo "Terminal proxy has been set!"
 end
 
 # Dotfiles manipulation
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-fish_config theme choose tomorrow
+# fish_config
+fish_config theme choose tomorrow-night-bright
 
 ## Yazi
 function y
@@ -40,21 +42,24 @@ fish_add_path /usr/local/opt/trash-cli/bin
 # Android
 set -x ANDROID_HOME $HOME/Library/Android/sdk
 
+# nvm
+# source /usr/share/nvm/init-nvm.sh
+
 # npm
 set -x npm_config_prefix $HOME/.local
 fish_add_path $HOME/.local/bin
 
 # pnpm
-set -x PNPM_HOME $HOME/.local/share/pnpm/
+set -x PNPM_HOME $HOME/.local/share/pnpm
 fish_add_path $PNPM_HOME
 
 # postgresql
 fish_add_path /usr/local/opt/postgresql@18/bin
 
 # fcitx5
-# set -Ux GTK_IM_MODULE fcitx
-# set -Ux XMODIFIERS @im=fcitx
-# set -Ux QT_IM_MODULE fcitx
+# set -x GTK_IM_MODULE fcitx
+set -x XMODIFIERS @im=fcitx
+# set -x QT_IM_MODULE fcitx
 # set -Ux SDL_IM_MODULE fcitx
 
 ## Golang
@@ -82,11 +87,11 @@ set -x CPPFLAGS -I/usr/local/opt/ruby/include
 ## for config
 set -x PKG_CONFIG_PATH /usr/local/opt/ruby/lib/pkgconfig
 ## for cocoapods, can check from `gem which cocoapods`, not at the cocoapods/bin tho
-# (FUCKING COCOAPODS YOU POS #$@##@#)
 fish_add_path $GEM_HOME/ruby/3.4.0/bin
 
 # Rust
-fish_add_path $HOME/.cargo/bin/
+set CARGO_HOME $HOME/.cargo
+fish_add_path $CARGO_HOME/bin/
 
 ## Clang
 fish_add_path /usr/local/opt/llvm/bin
@@ -115,5 +120,4 @@ fish_add_path /opt/venv/bin
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
-# Tips:
-# If you are looking for why /cj doesn't work is because of fish tide, you can't do the compact style
+starship init fish | source
